@@ -18,7 +18,6 @@ class DVD:
         self.previous_time = time.time()
 
         # Initialize image
-        #self.img = PhotoImage(file="images/ODDBALL.png", master=self.tk)
         self.img = get_image(self.tk)
         self.img_label = Label(
             master=self.tk,
@@ -38,7 +37,7 @@ class DVD:
         self.xPos = round(self.screen_width / 2)
         self.yPos = round(self.screen_height / 2)
 
-        #self.move_image()
+        self.move_image()
 
         self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
         self.tk.mainloop()
@@ -51,8 +50,13 @@ class DVD:
         self.xPos += round(settings.xVel * delta_time)
         self.yPos += round(settings.yVel * delta_time)
 
+        # Clamp value to within the screen (prevents getting stuck on edges)
+        self.xPos = max(min(self.xPos, self.screen_width), 0)
+        self.yPos = max(min(self.yPos, self.screen_height), 0)
+
         if self.xPos <= 0 or self.xPos + self.img.width() >= self.screen_width:
             settings.xVel = -settings.xVel
+
         if self.yPos <= 0 or self.yPos + self.img.height() >= self.screen_height:
             settings.yVel = -settings.yVel  # Reverse y velocity
 

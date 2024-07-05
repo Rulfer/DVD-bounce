@@ -5,12 +5,10 @@ from PIL import Image, ImageTk
 def get_image(active_tkinter):
     img = Image.open("images/ODDBALL.png")
     width, height = img.size
-    new_width = 200
-    new_height = 100
-    left = (width - new_width) / 2
-    top = (height - new_height) / 2
-    right = (width + new_width) / 2
-    bottom = (height + new_height) / 2
+    left = 125
+    top = 20
+    right = width - 100
+    bottom = height - 20
 
     border = (left, top, right, bottom)
     cropped_image = img.crop(border)
