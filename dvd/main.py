@@ -9,8 +9,7 @@ canvas = Canvas(tk, bg="grey")
 screen_width = tk.winfo_screenwidth()
 screen_height = tk.winfo_screenheight()
 
-
-img = PhotoImage(file='F:/Personlig/dvd/images/cursed.png', master=tk)
+img = PhotoImage(file="images/cursed.png", master=tk)
 img_label = Label(
     master=tk,
     image=img,
