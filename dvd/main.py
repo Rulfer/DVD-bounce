@@ -16,13 +16,13 @@ class DVD:
         self.screen_height = self.tk.winfo_screenheight()
 
         # Initialize Canvas
-        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, bg="black")
+        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, bg="white")
         self.canvas.pack(anchor=CENTER, expand=True)
 
         self.tk.overrideredirect(True)
-        self.tk.wm_attributes("-topmost", True)
-        self.tk.wm_attributes("-disabled", True)
-        self.tk.wm_attributes("-transparentcolor", "black")
+        #self.tk.wm_attributes("-topmost", True)
+        #self.tk.wm_attributes("-disabled", True)
+        #self.tk.wm_attributes("-transparentcolor", "black")
 
         # Initialize time
         self.previous_time = time.time()
@@ -59,12 +59,16 @@ class DVD:
 
                 if collision['right']:
                     l.go_right = False
+                    label.go_right = True
                 elif collision['left']:
                     l.go_right = True
+                    label.go_right = False
                 if collision['top']:
                     l.go_up = False
+                    label.go_up = True
                 elif collision['bottom']:
                     l.go_up = True
+                    label.go_up = False
 
 
         self.tk.after(settings.milliseconds, self.move_image)
@@ -88,6 +92,8 @@ class DVD:
     def determine_edges(self, bbox1, bbox2, id):
         edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
 
+
+        """ This works, but not how I want
         if bbox1[2] >= bbox2[0] and bbox1[0] <= bbox2[0]:  # Right edge of bbox1 and left edge of bbox2
             edges['right'] = True
         if bbox1[0] <= bbox2[2] and bbox1[2] >= bbox2[2]:  # Left edge of bbox1 and right edge of bbox2
@@ -96,6 +102,45 @@ class DVD:
             edges['bottom'] = True
         if bbox1[1] <= bbox2[3] and bbox1[3] >= bbox2[3]:  # Top edge of bbox1 and bottom edge of bbox2
             edges['top'] = True
+        """
+        if bbox1[2] >= bbox2[0] and bbox1[0] <= bbox2[2] and bbox1[3] >= bbox2[1] and bbox1[1] <= bbox2[3]:
+            right_distance = bbox2[0] - bbox1[2]
+            left_distance = bbox1[0] - bbox2[2]
+            bottom_distance = bbox2[1] - bbox1[3]
+            top_distance = bbox1[1] - bbox2[3]
+
+            distances = {
+                'right': right_distance,
+                'left': left_distance,
+                'bottom': bottom_distance,
+                'top': top_distance
+            }
+
+            min_edge = min(distances, key=distances.get)
+
+            if min_edge == 'right' and right_distance < 0:
+                edges['right'] = True
+            elif min_edge == 'left' and left_distance < 0:
+                edges['left'] = True
+            elif min_edge == 'bottom' and bottom_distance < 0:
+                edges['bottom'] = True
+            elif min_edge == 'top' and top_distance < 0:
+                edges['top'] = True
+
+        # Find the minimum distance to determine the closest edge collision
+        distances = {
+            'right': right_distance,
+            'left': left_distance,
+            'bottom': bottom_distance,
+            'top': top_distance
+        }
+
+        # Get the minimum distance and corresponding edge
+        min_edge = min(distances, key=distances.get)
+
+        # Mark only the closest edge as colliding
+        if distances[min_edge] != float('inf'):
+            edges[min_edge] = True
 
         return edges
 
