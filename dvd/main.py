@@ -22,7 +22,7 @@ class DVD:
         self.tk.overrideredirect(True)
         #self.tk.wm_attributes("-topmost", True)
         #self.tk.wm_attributes("-disabled", True)
-        #self.tk.wm_attributes("-transparentcolor", "black")
+        self.tk.wm_attributes("-transparentcolor", "white")
 
         # Initialize time
         self.previous_time = time.time()

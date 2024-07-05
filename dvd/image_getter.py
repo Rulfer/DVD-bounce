@@ -4,20 +4,21 @@ from PIL import Image, ImageTk
 
 def get_image(active_tkinter):
     img = Image.open("images/ODDBALL.png").convert("RGBA")
+
     width, height = img.size
-    left = 125
-    top = 20
-    right = width - 100
-    bottom = height - 20
+    new_size = (int(width * 0.5), int(height * 0.5))
+    resized_image = img.resize(new_size)
+
+
+    new_width, new_height = resized_image.size
+    # Define crop box as a percentage of the new size
+    left = int(new_width * 0.25)  # 10% from the left
+    top = int(new_height * 0.05)  # 5% from the top
+    right = new_width - int(new_width * 0.2)  # 10% from the right
+    bottom = new_height - int(new_height * 0.05)  # 5% from the bottom
 
     border = (left, top, right, bottom)
-    cropped_image = img.crop(border)
-
-    #if cropped_image.mode != 'RGBA':
-    #    cropped_image = cropped_image.convert('RGBA')
-
-    #transparent_background = Image.new('RGBA', cropped_image.size, (0, 0, 0, 0))
-    #transparent_background.paste(cropped_image, (0, 0), cropped_image)
+    cropped_image = resized_image.crop(border)
 
     tk_image = ImageTk.PhotoImage(image=cropped_image, master=active_tkinter)
     return tk_image

@@ -23,7 +23,6 @@ class MyLabel:
         self.id = c.create_window(self.xPos, self.yPos, window=self.label, anchor='nw')
         self.canvas = c
         self.tk = tk
-        #self.canvas.moveto(self.id, self.xPos, self.yPos)
 
     def update(self):
         self.canvas.moveto(self.id, self.xPos, self.yPos)
@@ -31,7 +30,6 @@ class MyLabel:
 
     def _hit_edge(self):
         coords = self.canvas.coords(self.id)
-        print(coords)
         if coords[0] <= 0:
             self.canvas.moveto(self.id, 0, coords[1])
             self.go_right = True
