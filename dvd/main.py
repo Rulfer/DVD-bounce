@@ -2,6 +2,8 @@ from tkinter import *
 import time
 import settings
 from PIL import Image, ImageTk
+from image_getter import get_image
+
 
 class DVD:
     def __init__(self):
@@ -16,9 +18,8 @@ class DVD:
         self.previous_time = time.time()
 
         # Initialize image
-        self.canvas = Canvas(self.tk, bg="grey")
-        self.img = PhotoImage(file="images/ODDBALL.png", master=self.tk)
-        #elf.img = self.img.
+        #self.img = PhotoImage(file="images/ODDBALL.png", master=self.tk)
+        self.img = get_image(self.tk)
         self.img_label = Label(
             master=self.tk,
             image=self.img,
@@ -37,9 +38,9 @@ class DVD:
         self.xPos = round(self.screen_width / 2)
         self.yPos = round(self.screen_height / 2)
 
-        self.move_image()
+        #self.move_image()
 
-        self.tk.geometry(f'{self.img.height()}x{self.img.width()}+{self.xPos}+{self.yPos}')
+        self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
         self.tk.mainloop()
 
     def move_image(self):
