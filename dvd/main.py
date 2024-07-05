@@ -1,56 +1,61 @@
 from tkinter import *
 import time
+import settings
 
-tk = Tk()
-tk.overrideredirect("True")
-canvas = Canvas(tk, bg="grey")
 
-# Get screen width and height
-screen_width = tk.winfo_screenwidth()
-screen_height = tk.winfo_screenheight()
+class DVD:
+    def __init__(self):
+        self.tk = Tk()
+        self.tk.overrideredirect(True)
 
-img = PhotoImage(file="images/cursed.png", master=tk)
-img_label = Label(
-    master=tk,
-    image=img,
-    bg="black",
-    width=img.width(),
-    height=img.height()
-)
-img_label.place(x=0, y=0)
-img_label.pack()
-xPos = round(screen_width / 2)
-yPos = round(screen_height / 2)
-xVel = 250
-yVel = 250
-moveRight = True
-moveUp = True
+        # Initialize time
+        self.previous_time = time.time()
 
-# initialize time
-previous_time = time.time()
+        # Initialize image
+        self.canvas = Canvas(self.tk, bg="grey")
+        self.img = PhotoImage(file="images/cursed.png", master=self.tk)
+        self.img_label = Label(
+            master=self.tk,
+            image=self.img,
+            bg="black",
+            width=self.img.width(),
+            height=self.img.height()
+        )
+        self.img_label.place(x=0, y=0)
+        self.img_label.pack()
 
-def move_image():
-    global xPos, yPos, previous_time, xVel, yVel
-    current_time = time.time()
-    delta_time = current_time - previous_time
-    previous_time = current_time
+        # Get screen width and height
+        self.screen_width = self.tk.winfo_screenwidth()
+        self.screen_height = self.tk.winfo_screenheight()
+        # Initialize screen position
+        self.xPos = round(self.screen_width / 2)
+        self.yPos = round(self.screen_height / 2)
 
-    print(f"x is {xPos}")
-    xPos += round(xVel * delta_time)
-    yPos += round(yVel * delta_time)
+        self.move_image()
 
-    if xPos <= 0 or xPos + img.width() >= screen_width:
-        xVel = -xVel
-    if yPos <= 0 or yPos + img.height() >= screen_height:
-        yVel = -yVel  # Reverse y velocity
+        self.tk.geometry(f'{self.img.height()}x{self.img.width()}+{self.xPos}+{self.yPos}')
+        self.tk.mainloop()
 
-    tk.geometry(f'{img.width()}x{img.height()}+{xPos}+{yPos}')
+    def move_image(self):
+        current_time = time.time()
+        delta_time = current_time - self.previous_time
+        self.previous_time = current_time
 
-    # Update label position
-    img_label.place(x=0, y=0)
+        print(f"x is {self.xPos}")
+        self.xPos += round(settings.xVel * delta_time)
+        self.yPos += round(settings.yVel * delta_time)
 
-    tk.after(10, move_image)
+        if self.xPos <= 0 or self.xPos + self.img.width() >= self.screen_width:
+            settings.xVel = -settings.xVel
+        if self.yPos <= 0 or self.yPos + self.img.height() >= self.screen_height:
+            settings.yVel = -settings.yVel  # Reverse y velocity
 
-move_image()
-tk.geometry(f'{img.height()}x{img.width()}+{xPos}+{yPos}')
-tk.mainloop()
+        self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
+
+        # Update label position
+        self.img_label.place(x=0, y=0)
+
+        self.tk.after(settings.milliseconds, self.move_image)
+
+
+DVD()
