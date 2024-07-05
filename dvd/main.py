@@ -1,19 +1,24 @@
 from tkinter import *
 import time
 import settings
-
+from PIL import Image, ImageTk
 
 class DVD:
     def __init__(self):
+        # tkinter
         self.tk = Tk()
         self.tk.overrideredirect(True)
+        self.tk.wm_attributes("-topmost", True)
+        self.tk.wm_attributes("-disabled", True)
+        self.tk.wm_attributes("-transparentcolor", "black")
 
         # Initialize time
         self.previous_time = time.time()
 
         # Initialize image
         self.canvas = Canvas(self.tk, bg="grey")
-        self.img = PhotoImage(file="images/cursed.png", master=self.tk)
+        self.img = PhotoImage(file="images/ODDBALL.png", master=self.tk)
+        #elf.img = self.img.
         self.img_label = Label(
             master=self.tk,
             image=self.img,
@@ -21,6 +26,7 @@ class DVD:
             width=self.img.width(),
             height=self.img.height()
         )
+        print(f"Width:Height={self.img.width()}:{self.img.height()}")
         self.img_label.place(x=0, y=0)
         self.img_label.pack()
 
@@ -41,7 +47,6 @@ class DVD:
         delta_time = current_time - self.previous_time
         self.previous_time = current_time
 
-        print(f"x is {self.xPos}")
         self.xPos += round(settings.xVel * delta_time)
         self.yPos += round(settings.yVel * delta_time)
 
