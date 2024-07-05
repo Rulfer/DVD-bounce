@@ -3,7 +3,7 @@ import time
 import settings
 from PIL import Image, ImageTk
 from image_getter import get_image
-import custom_label
+import animated_label
 
 
 class DVD:
@@ -20,8 +20,8 @@ class DVD:
         self.canvas.pack(anchor=CENTER, expand=True)
 
         self.tk.overrideredirect(True)
-        #self.tk.wm_attributes("-topmost", True)
-        #self.tk.wm_attributes("-disabled", True)
+        self.tk.wm_attributes("-topmost", True)
+        self.tk.wm_attributes("-disabled", True)
         self.tk.wm_attributes("-transparentcolor", "black")
 
         # Initialize time
@@ -34,15 +34,8 @@ class DVD:
         self.labels.append(self.create_image())
         self.labels.append(self.create_image())
 
-        #self.img_label = self.create_image()
-
-        # Initialize screen position
-        self.xPos = round(self.screen_width / 2)
-        self.yPos = round(self.screen_height / 2)
-
         self.move_image()
 
-        #self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
         self.tk.geometry(f'{self.screen_width}x{self.screen_height}')
         self.tk.mainloop()
 
@@ -59,58 +52,73 @@ class DVD:
             label.xPos = max(min(label.xPos, self.screen_width), 0)
             label.yPos = max(min(label.yPos, self.screen_height), 0)
 
-            if self.hit_edge(label):
-                self.hit_others(label)
-
             label.update()
+            collisions = self.overlapping(label)
+            for overlap_item, collision in collisions.items():
+                l = self.get_label(collision['id'])
+
+                if collision['right']:
+                    l.go_right = False
+                elif collision['left']:
+                    l.go_right = True
+                if collision['top']:
+                    l.go_up = False
+                elif collision['bottom']:
+                    l.go_up = True
+
 
         self.tk.after(settings.milliseconds, self.move_image)
 
     def create_image(self):
-        label = custom_label.my_label(self.tk, self.img)
+        label = animated_label.MyLabel(self.tk, self.img, self.canvas)
         return label
 
-    def hit_edge(self, label):
-        if label.xPos <= 0 or label.xPos + label.img_width >= self.screen_width:
-            label.horizontal_hit()
-            return True
+    def overlapping(self, label):
+        overlapping_items = self.canvas.find_overlapping(*self.canvas.bbox(label.id))
+        collisions = {}
 
-        if label.yPos <= 0 or label.yPos + label.img_height >= self.screen_height:
-            label.vertical_hit()
-            return True
+        bbox1 = self.canvas.bbox(label.id)
+        for overlap_item in overlapping_items:
+            if overlap_item != label.id:
+                bbox2 = self.canvas.bbox(overlap_item)
+                collisions[overlap_item] = self.determine_edges(bbox1, bbox2, overlap_item)
 
-        return False
+        return collisions
 
-    def hit_others(self, label):
-        self_pos = label.get_borders()
-        my_upper_left = self_pos[0]
-        my_lower_right = self_pos[1]
+    def determine_edges(self, bbox1, bbox2, id):
+        edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
 
-        for other_label in self.labels:
-            if other_label is label:
-                continue
+        if bbox1[2] >= bbox2[0] and bbox1[0] <= bbox2[0]:  # Right edge of bbox1 and left edge of bbox2
+            edges['right'] = True
+        if bbox1[0] <= bbox2[2] and bbox1[2] >= bbox2[2]:  # Left edge of bbox1 and right edge of bbox2
+            edges['left'] = True
+        if bbox1[3] >= bbox2[1] and bbox1[1] <= bbox2[1]:  # Bottom edge of bbox1 and top edge of bbox2
+            edges['bottom'] = True
+        if bbox1[1] <= bbox2[3] and bbox1[3] >= bbox2[3]:  # Top edge of bbox1 and bottom edge of bbox2
+            edges['top'] = True
 
-            other_pos = other_label.get_borders()
-            other_upper_left = other_pos[0]
-            other_lower_right = other_pos[1]
+        return edges
 
-            # Check if the border of the current label overlaps with any other
-            # if rectangle has area 0, no overlap
-            if (my_upper_left[0] == other_upper_left[0] or my_upper_left[1] == other_lower_right[1]
-                    or other_lower_right[0] == my_lower_right[0] or other_lower_right[1] == my_lower_right[1]):
-                return False
+    def _overlapping(self, label):
+        x0, y0, x1, y1 = self.canvas.bbox(label.id)
+        overlapping_items = self.canvas.find_overlapping(x0, y0, x1, y1)
 
-                # If one rectangle is on left side of other
-            if my_upper_left[0] > other_lower_right[0] or my_lower_right[0] > other_upper_left[0]:
-                return False
+        if len(overlapping_items) > 1:
+            other_label = self.get_label(overlapping_items[1])
 
-                # If one rectangle is above other
-            if other_upper_left[1] > my_lower_right[1] or other_lower_right[1] > my_upper_left[1]:
-                return False
+            my_coords = self.canvas.coords(label.id)
+            other_coords = self.canvas.coords(other_label.id)
 
-            label.vertical_hit()
-            label.horizontal_hit()
+            # Ensure they move away horizontally
+            label.go_right = True if my_coords[0] < other_coords[0] else False
+            other_label.go_right = True if other_coords[0] < my_coords[0] else False
 
-            return True
+            label.go_up = True if my_coords[1] < other_coords[1] else False
+            other_label.go_up = True if other_coords[1] < my_coords[1] else False
+
+    def get_label(self, id_filter):
+        return next(x for x in self.labels if x.id == id_filter)
+
 
 DVD()
+

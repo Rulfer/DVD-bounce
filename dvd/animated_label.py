@@ -2,10 +2,11 @@ from tkinter import *
 import random
 
 
-class my_label:
-    def __init__(self, tk, img):
+class MyLabel:
+    def __init__(self, tk, img, c):
         self.xPos = random.randrange(start=0, stop=tk.winfo_screenwidth() - img.width())
         self.yPos = random.randrange(start=100, stop=tk.winfo_screenheight() - img.height())
+
         self.label = Label(
             master=tk,
             image=img,
@@ -19,9 +20,35 @@ class my_label:
         self.img_height = img.height()
         self.go_right = random.choice([True, False])
         self.go_up = random.choice([True, False])
+        self.id = c.create_window(self.xPos, self.yPos, window=self.label, anchor='nw')
+        self.canvas = c
+        self.tk = tk
+        #self.canvas.moveto(self.id, self.xPos, self.yPos)
 
     def update(self):
-        self.label.place(x=self.xPos, y=self.yPos)
+        self.canvas.moveto(self.id, self.xPos, self.yPos)
+        self._hit_edge()
+
+    def _hit_edge(self):
+        coords = self.canvas.coords(self.id)
+        print(coords)
+        if coords[0] <= 0:
+            self.canvas.moveto(self.id, 0, coords[1])
+            self.go_right = True
+            print("GO RIGHT")
+        elif coords[0] + self.img_width >= self.canvas.winfo_screenwidth():
+            self.canvas.moveto(self.id, self.canvas.winfo_screenwidth() - self.img_width, coords[1])
+            self.go_right = False
+
+        if coords[1] <= 0:
+            self.canvas.moveto(self.id, coords[0], 0)
+            self.go_up = False
+        elif coords[1] + self.img_height >= self.canvas.winfo_screenheight():
+            self.canvas.moveto(self.id, coords[0], self.canvas.winfo_screenheight() - self.img_height)
+            self.go_up = True
+
+    def get_position(self):
+        return self.canvas.coords(self.id)
 
     def horizontal_modifier(self):
         return 1 if self.go_right else -1
@@ -43,3 +70,6 @@ class my_label:
         upperLeft = self.xPos, self.yPos
         lowerRight = self.xPos + self.img_width, self.yPos + self.img_height
         return upperLeft, lowerRight
+
+    def id(self):
+        return self.id()
