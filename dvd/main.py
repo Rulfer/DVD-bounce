@@ -3,12 +3,22 @@ import time
 import settings
 from PIL import Image, ImageTk
 from image_getter import get_image
+import custom_label
 
 
 class DVD:
     def __init__(self):
         # tkinter
         self.tk = Tk()
+
+        # Get screen width and height
+        self.screen_width = self.tk.winfo_screenwidth()
+        self.screen_height = self.tk.winfo_screenheight()
+
+        # Initialize Canvas
+        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, bg="black")
+        self.canvas.pack(anchor=CENTER, expand=True)
+
         self.tk.overrideredirect(True)
         self.tk.wm_attributes("-topmost", True)
         self.tk.wm_attributes("-disabled", True)
@@ -17,29 +27,23 @@ class DVD:
         # Initialize time
         self.previous_time = time.time()
 
-        # Initialize image
+        # Initialize images
         self.img = get_image(self.tk)
-        self.img_label = Label(
-            master=self.tk,
-            image=self.img,
-            bg="black",
-            width=self.img.width(),
-            height=self.img.height()
-        )
-        print(f"Width:Height={self.img.width()}:{self.img.height()}")
-        self.img_label.place(x=0, y=0)
-        self.img_label.pack()
+        self.labels = []
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
 
-        # Get screen width and height
-        self.screen_width = self.tk.winfo_screenwidth()
-        self.screen_height = self.tk.winfo_screenheight()
+        #self.img_label = self.create_image()
+
         # Initialize screen position
         self.xPos = round(self.screen_width / 2)
         self.yPos = round(self.screen_height / 2)
 
         self.move_image()
 
-        self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
+        #self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
+        self.tk.geometry(f'{self.screen_width}x{self.screen_height}')
         self.tk.mainloop()
 
     def move_image(self):
@@ -47,25 +51,27 @@ class DVD:
         delta_time = current_time - self.previous_time
         self.previous_time = current_time
 
-        self.xPos += round(settings.xVel * delta_time)
-        self.yPos += round(settings.yVel * delta_time)
+        for label in self.labels:
+            label.xPos += round(settings.xVel * label.horizontal_modifier() * delta_time)
+            label.yPos += round(settings.yVel * label.vertical_modifier() * delta_time)
 
-        # Clamp value to within the screen (prevents getting stuck on edges)
-        self.xPos = max(min(self.xPos, self.screen_width), 0)
-        self.yPos = max(min(self.yPos, self.screen_height), 0)
+            # Clamp value to within the screen (prevents getting stuck on edges)
+            label.xPos = max(min(label.xPos, self.screen_width), 0)
+            label.yPos = max(min(label.yPos, self.screen_height), 0)
 
-        if self.xPos <= 0 or self.xPos + self.img.width() >= self.screen_width:
-            settings.xVel = -settings.xVel
+            if label.xPos <= 0 or label.xPos + label.img_width >= self.screen_width:
+                label.horizontal_hit()
 
-        if self.yPos <= 0 or self.yPos + self.img.height() >= self.screen_height:
-            settings.yVel = -settings.yVel  # Reverse y velocity
+            if label.yPos <= 0 or label.yPos + label.img_height >= self.screen_height:
+                label.vertical_hit()
 
-        self.tk.geometry(f'{self.img.width()}x{self.img.height()}+{self.xPos}+{self.yPos}')
-
-        # Update label position
-        self.img_label.place(x=0, y=0)
+            label.update()
 
         self.tk.after(settings.milliseconds, self.move_image)
+
+    def create_image(self):
+        label = custom_label.my_label(self.tk, self.img)
+        return label
 
 
 DVD()
