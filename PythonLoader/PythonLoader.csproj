@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<RootNamespace>Python_Loader</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<StartupObject>Python_Loader.Program</StartupObject>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<SignAssembly>False</SignAssembly>
+		<BaseOutputPath>F:\Test\</BaseOutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<Optimize>True</Optimize>
+		<OutputPath>$(BaseOutputPath)Release\</OutputPath>
+		<IntermediateOutputPath>$(BaseOutputPath)obj\Release\</IntermediateOutputPath>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<Optimize>False</Optimize>
+		<OutputPath>$(BaseOutputPath)Debug\</OutputPath>
+		<IntermediateOutputPath>$(BaseOutputPath)obj\Debug\</IntermediateOutputPath>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Management" Version="8.0.0" />
+	</ItemGroup>
+
+</Project>

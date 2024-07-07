@@ -121,9 +121,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Python Loader.csproj",
-      "projectName": "Python Loader",
-      "projectPath": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Python Loader.csproj",
+      "projectUniqueName": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PythonLoader.csproj",
+      "projectName": "PythonLoader",
+      "projectPath": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PythonLoader.csproj",
       "packagesPath": "C:\\Users\\rosse\\.nuget\\packages\\",
       "outputPath": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\obj\\",
       "projectStyle": "PackageReference",

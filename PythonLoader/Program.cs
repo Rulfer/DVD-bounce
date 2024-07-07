@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System;
 using System.Management;
+using System.IO;
 
 namespace Python_Loader
 {
@@ -24,11 +25,17 @@ namespace Python_Loader
             ApplicationConfiguration.Initialize();
 
             RedirectConsoleOutput();
-            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            Debug.WriteLine("Path: " + projectFolder);
-            Console.WriteLine("Path: " + projectFolder);
-            Form = new Form1();
-            Application.Run(Form);
+            Console.WriteLine("Hello, world");
+            try
+            {
+                Form = new Form1();
+                Application.Run(Form);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
+            }
 
         }
 
@@ -60,19 +67,58 @@ namespace Python_Loader
             Form.OnPythonDataRetrieved(result);
         }
 
+        public static void LoadInstallPython()
+        {
+            string path;
+#if DEBUG
+            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            path = Path.Combine(gitFolder, "python-3.12.0-amd64.exe");
+#else
+            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Installer/python-3.12.0-amd64.exe");
+#endif
+            CloseProcess();
+
+            try
+            {
+                // Create a new process to start the Python script
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = path;
+                //psi.Arguments = path;
+                psi.UseShellExecute = false;
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
+                psi.CreateNoWindow = true;
+
+
+                _process = new Process();
+                _process.Exited += new EventHandler(OnProcessExited);
+                _process.StartInfo = psi;
+                _process.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
         public static void LoadPythonProgram()
         {
             //string path = @"F:\PersonligeProsjekter\DVD-bounce\dvd\main.py";
-            string path = @"F:\PersonligeProsjekter\DVD-bounce\PythonLoader\dvd\main.py";
-            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-
-            //string path = "@" + Path.Combine(projectFolder, "dvd\\main.py");
+            //string path = @"F:\PersonligeProsjekter\DVD-bounce\PythonLoader\dvd\main.py";
+            string path;
+#if DEBUG
+            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            path = Path.Combine(gitFolder, "dvd/main.py");
+#else
+            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Build/main.py");
+#endif
             Debug.WriteLine("python.exe path: " + _python.path);
             Debug.WriteLine("DVD path: " + path);
             Console.WriteLine("python.exe path: " + _python.path);
             Console.WriteLine("DVD path: " + path);
+            Console.WriteLine("Directory.GetCurrentDirectory(): " + Directory.GetCurrentDirectory());
 
-            ClosePythonProgram();
+            CloseProcess();
 
             try
             {
@@ -97,7 +143,7 @@ namespace Python_Loader
             }
         }
 
-        public static void ClosePythonProgram()
+        public static void CloseProcess()
         {
             if (_process == null)
                 return;

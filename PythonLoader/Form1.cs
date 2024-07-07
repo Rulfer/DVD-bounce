@@ -13,6 +13,7 @@ namespace Python_Loader
             btnCloseProgram.Hide();
 
             btnLaunchProgram.Click += OnLaunchProgramClicked;
+            btnInstallPython.Click += OnInstallPythonClicked;
             btnCloseProgram.Click += OnCloseProgramClicked;
         }
 
@@ -53,6 +54,14 @@ namespace Python_Loader
 
         }
 
+        private void OnInstallPythonClicked(object? sender, EventArgs e)
+        {
+            btnInstallPython.Hide();
+            btnLaunchProgram.Hide();
+
+            Program.LoadInstallPython();
+        }
+
         private void OnLaunchProgramClicked(object? sender, EventArgs e)
         {
             Program.LoadPythonProgram();
@@ -63,7 +72,7 @@ namespace Python_Loader
 
         private void OnCloseProgramClicked(object? sender, EventArgs e)
         {
-            Program.ClosePythonProgram();
+            Program.CloseProcess();
             OnPythonClosed();
         }
     }
