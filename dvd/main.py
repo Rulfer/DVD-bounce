@@ -16,13 +16,13 @@ class DVD:
         self.screen_height = self.tk.winfo_screenheight()
 
         # Initialize Canvas
-        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, highlightthickness=0, bg="white")
+        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, highlightthickness=0, bg="black")
         self.canvas.pack(anchor=CENTER, expand=True)
 
         self.tk.overrideredirect(True)
         self.tk.wm_attributes("-topmost", True)
         self.tk.wm_attributes("-disabled", True)
-        self.tk.wm_attributes("-transparentcolor", "white")
+        self.tk.wm_attributes("-transparentcolor", "black")
 
         # Initialize time
         self.previous_time = time.time()
@@ -60,6 +60,14 @@ class DVD:
 
             label.update()
 
+        self.tk.after(settings.milliseconds, self.move_image)
+
+    def create_image(self):
+        label = animated_label.MyLabel(self.tk, self.img, self.canvas)
+        return label
+
+    def calculate_image_collisions(self):
+        for label in self.labels:
             overlapping_items = self.canvas.find_overlapping(*self.canvas.bbox(label.id))
             my_bbox = self.canvas.bbox(label.id)
 
@@ -67,27 +75,18 @@ class DVD:
             for overlap_item, collision in collisions.items():
                 l = self.get_label(collision['id'])
 
-
                 if collision['right']:
-                    l.set_right(False)
-                    label.set_right(True)
-                elif collision['left']:
-                    l.set_right(True)
+                    # l.set_right(True)
                     label.set_right(False)
+                if collision['left']:
+                    # l.set_right(False)
+                    label.set_right(True)
                 if collision['top']:
-                    l.go_up = False
+                    # l.go_up = False
                     label.go_up = True
-                elif collision['bottom']:
-                    l.go_up = True
+                if collision['bottom']:
+                    # l.go_up = True
                     label.go_up = False
-
-
-
-        self.tk.after(settings.milliseconds, self.move_image)
-
-    def create_image(self):
-        label = animated_label.MyLabel(self.tk, self.img, self.canvas)
-        return label
 
     """
     def get_overlap_side(self, bbox1, bbox2):
@@ -116,13 +115,12 @@ class DVD:
             if overlap_item != label.id:
                 # Get the collision between my bbox and the other bbox
                 other_bbox = self.canvas.bbox(overlap_item)
-                collisions[overlap_item] = self.determine_edges(my_bbox, other_bbox, overlap_item)
-                #collisions[overlap_item] = self.simple_edge(bbox0, bbox1, overlap_item)
+                #collisions[overlap_item] = self.determine_edges(my_bbox, other_bbox, overlap_item)
+                collisions[overlap_item] = self.simple_edge(my_bbox, other_bbox, overlap_item)
 
 
         return collisions
 
-    """
     def simple_edge(self, my_bbox, other_bbox, id):
         edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
 
@@ -139,7 +137,6 @@ class DVD:
             edges['top'] = True
 
         return edges
-    """
 
     def determine_edges(self, bbox0, bbox1, id):
         edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
