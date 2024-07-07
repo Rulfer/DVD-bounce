@@ -1,15 +1,17 @@
 from tkinter import *
 import random
-
+from PIL import Image, ImageTk
+import image_getter
 
 class MyLabel:
     def __init__(self, tk, img, c):
         self.xPos = random.randrange(start=0, stop=tk.winfo_screenwidth() - img.width())
         self.yPos = random.randrange(start=100, stop=tk.winfo_screenheight() - img.height())
 
+        self.img = img
         self.label = Label(
             master=tk,
-            image=img,
+            image=self.img,
             bg="black",
             width=img.width(),
             height=img.height()
@@ -45,29 +47,20 @@ class MyLabel:
             self.canvas.moveto(self.id, coords[0], self.canvas.winfo_screenheight() - self.img_height)
             self.go_up = True
 
-    def get_position(self):
-        return self.canvas.coords(self.id)
-
     def horizontal_modifier(self):
         return 1 if self.go_right else -1
 
     def vertical_modifier(self):
         return -1 if self.go_up else 1
 
-    def horizontal_hit(self):
-        self.go_right = not self.go_right
+    def set_right(self, right):
+        self.go_right = right
+
+    def set_up(self, up):
+        self.go_up = up
 
     def vertical_hit(self):
         self.go_up = not self.go_up
-
-    def get_borders(self):
-        # Border of the image
-        xPos = self.xPos
-
-        # First, get corner to the right
-        upperLeft = self.xPos, self.yPos
-        lowerRight = self.xPos + self.img_width, self.yPos + self.img_height
-        return upperLeft, lowerRight
 
     def id(self):
         return self.id()

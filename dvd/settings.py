@@ -1,3 +1,3 @@
-xVel = 500
-yVel = 500
-milliseconds = 5
+xVel = 400
+yVel = 400
+milliseconds = 1

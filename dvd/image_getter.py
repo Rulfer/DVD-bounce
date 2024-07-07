@@ -1,14 +1,12 @@
 from tkinter import *
 from PIL import Image, ImageTk
-
+import io
 
 def get_image(active_tkinter):
     img = Image.open("images/ODDBALL.png").convert("RGBA")
-
     width, height = img.size
     new_size = (int(width * 0.5), int(height * 0.5))
     resized_image = img.resize(new_size)
-
 
     new_width, new_height = resized_image.size
     # Define crop box as a percentage of the new size

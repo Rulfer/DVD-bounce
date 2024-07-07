@@ -16,12 +16,12 @@ class DVD:
         self.screen_height = self.tk.winfo_screenheight()
 
         # Initialize Canvas
-        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, bg="white")
+        self.canvas = Canvas(self.tk, width=self.screen_width, height=self.screen_height, highlightthickness=0, bg="white")
         self.canvas.pack(anchor=CENTER, expand=True)
 
         self.tk.overrideredirect(True)
-        #self.tk.wm_attributes("-topmost", True)
-        #self.tk.wm_attributes("-disabled", True)
+        self.tk.wm_attributes("-topmost", True)
+        self.tk.wm_attributes("-disabled", True)
         self.tk.wm_attributes("-transparentcolor", "white")
 
         # Initialize time
@@ -30,6 +30,12 @@ class DVD:
         # Initialize images
         self.img = get_image(self.tk)
         self.labels = []
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
+        self.labels.append(self.create_image())
         self.labels.append(self.create_image())
         self.labels.append(self.create_image())
         self.labels.append(self.create_image())
@@ -53,16 +59,21 @@ class DVD:
             label.yPos = max(min(label.yPos, self.screen_height), 0)
 
             label.update()
+
+            overlapping_items = self.canvas.find_overlapping(*self.canvas.bbox(label.id))
+            my_bbox = self.canvas.bbox(label.id)
+
             collisions = self.overlapping(label)
             for overlap_item, collision in collisions.items():
                 l = self.get_label(collision['id'])
 
+
                 if collision['right']:
-                    l.go_right = False
-                    label.go_right = True
+                    l.set_right(False)
+                    label.set_right(True)
                 elif collision['left']:
-                    l.go_right = True
-                    label.go_right = False
+                    l.set_right(True)
+                    label.set_right(False)
                 if collision['top']:
                     l.go_up = False
                     label.go_up = True
@@ -71,61 +82,84 @@ class DVD:
                     label.go_up = False
 
 
+
         self.tk.after(settings.milliseconds, self.move_image)
 
     def create_image(self):
         label = animated_label.MyLabel(self.tk, self.img, self.canvas)
         return label
 
+    """
+    def get_overlap_side(self, bbox1, bbox2):
+        left1, top1, right1, bottom1 = bbox1
+        left2, top2, right2, bottom2 = bbox2
+
+        if right1 > left2 and left1 < right2 and bottom1 > top2 and top1 < bottom2:
+            overlaps = []
+            if right1 > left2 and left1 < left2:
+                overlaps.append('left')
+            if left1 < right2 and right1 > right2:
+                overlaps.append('right')
+            if bottom1 > top2 and top1 < top2:
+                overlaps.append('top')
+            if top1 < bottom2 and bottom1 > bottom2:
+                overlaps.append('bottom')
+            return overlaps
+        return []
+        """
     def overlapping(self, label):
         overlapping_items = self.canvas.find_overlapping(*self.canvas.bbox(label.id))
         collisions = {}
 
-        bbox1 = self.canvas.bbox(label.id)
+        my_bbox = self.canvas.bbox(label.id)
         for overlap_item in overlapping_items:
             if overlap_item != label.id:
-                bbox2 = self.canvas.bbox(overlap_item)
-                collisions[overlap_item] = self.determine_edges(bbox1, bbox2, overlap_item)
+                # Get the collision between my bbox and the other bbox
+                other_bbox = self.canvas.bbox(overlap_item)
+                collisions[overlap_item] = self.determine_edges(my_bbox, other_bbox, overlap_item)
+                #collisions[overlap_item] = self.simple_edge(bbox0, bbox1, overlap_item)
+
 
         return collisions
 
-    def determine_edges(self, bbox1, bbox2, id):
+    """
+    def simple_edge(self, my_bbox, other_bbox, id):
         edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
 
+        left1, top1, right1, bottom1 = my_bbox
+        left2, top2, right2, bottom2 = other_bbox
 
-        """ This works, but not how I want
-        if bbox1[2] >= bbox2[0] and bbox1[0] <= bbox2[0]:  # Right edge of bbox1 and left edge of bbox2
+        if right1 >= left2 > left1:
             edges['right'] = True
-        if bbox1[0] <= bbox2[2] and bbox1[2] >= bbox2[2]:  # Left edge of bbox1 and right edge of bbox2
+        if left1 <= right2 < right1:
             edges['left'] = True
-        if bbox1[3] >= bbox2[1] and bbox1[1] <= bbox2[1]:  # Bottom edge of bbox1 and top edge of bbox2
+        if bottom1 >= top2 > top1:
             edges['bottom'] = True
-        if bbox1[1] <= bbox2[3] and bbox1[3] >= bbox2[3]:  # Top edge of bbox1 and bottom edge of bbox2
+        if top1 <= bottom2 < bottom1:
             edges['top'] = True
-        """
-        if bbox1[2] >= bbox2[0] and bbox1[0] <= bbox2[2] and bbox1[3] >= bbox2[1] and bbox1[1] <= bbox2[3]:
-            right_distance = bbox2[0] - bbox1[2]
-            left_distance = bbox1[0] - bbox2[2]
-            bottom_distance = bbox2[1] - bbox1[3]
-            top_distance = bbox1[1] - bbox2[3]
 
-            distances = {
-                'right': right_distance,
-                'left': left_distance,
-                'bottom': bottom_distance,
-                'top': top_distance
-            }
+        return edges
+    """
 
-            min_edge = min(distances, key=distances.get)
+    def determine_edges(self, bbox0, bbox1, id):
+        edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
 
-            if min_edge == 'right' and right_distance < 0:
-                edges['right'] = True
-            elif min_edge == 'left' and left_distance < 0:
-                edges['left'] = True
-            elif min_edge == 'bottom' and bottom_distance < 0:
-                edges['bottom'] = True
-            elif min_edge == 'top' and top_distance < 0:
-                edges['top'] = True
+        #if bbox0[2] >= bbox1[0] and bbox0[0] <= bbox1[2] and bbox0[3] >= bbox1[1] and bbox0[1] <= bbox1[3]:
+        # Calculate the distances to each edge
+        right_distance = bbox1[0] - bbox0[2]
+        left_distance = bbox0[0] - bbox1[2]
+        bottom_distance = bbox1[1] - bbox0[3]
+        top_distance = bbox0[1] - bbox1[3]
+
+        # Mark edges as True if they overlap
+        if right_distance < 0:
+            edges['right'] = True
+        if left_distance < 0:
+            edges['left'] = True
+        if bottom_distance < 0:
+            edges['bottom'] = True
+        if top_distance < 0:
+            edges['top'] = True
 
         # Find the minimum distance to determine the closest edge collision
         distances = {
