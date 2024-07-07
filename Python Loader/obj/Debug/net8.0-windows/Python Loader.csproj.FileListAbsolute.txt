@@ -1,0 +1,21 @@
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python_Loader.Form1.resources
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.csproj.GenerateResource.cache
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.GeneratedMSBuildEditorConfig.editorconfig
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.AssemblyInfoInputs.cache
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.AssemblyInfo.cs
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.csproj.CoreCompileInputs.cache
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.sourcelink.json
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\Python Loader.exe
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\Python Loader.deps.json
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\Python Loader.runtimeconfig.json
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\Python Loader.dll
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\Python Loader.pdb
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.dll
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\refint\Python Loader.dll
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.pdb
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.genruntimeconfig.cache
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\ref\Python Loader.dll
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\System.Management.dll
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python Loader.csproj.AssemblyReference.cache
+F:\PersonligeProsjekter\DVD-bounce\Python Loader\obj\Debug\net8.0-windows\Python L.BC5B718F.Up2Date

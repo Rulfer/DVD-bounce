@@ -1,9 +1,11 @@
 from tkinter import *
 from PIL import Image, ImageTk
-import io
+from pathlib import Path
 
 def get_image(active_tkinter):
-    img = Image.open("images/snapchat_filter.png").convert("RGBA")
+    relativePath = Path(__file__).parent / "images/snapchat_filter.png"
+    #img = Image.open("images/snapchat_filter.png").convert("RGBA")
+    img = Image.open(relativePath).convert("RGBA")
     width, height = img.size
     new_size = (int(width * 0.5), int(height * 0.5))
     resized_image = img.resize(new_size)

@@ -88,38 +88,39 @@ class DVD:
                     # l.go_up = True
                     label.go_up = False
 
-    """
-    def get_overlap_side(self, bbox1, bbox2):
-        left1, top1, right1, bottom1 = bbox1
-        left2, top2, right2, bottom2 = bbox2
 
-        if right1 > left2 and left1 < right2 and bottom1 > top2 and top1 < bottom2:
-            overlaps = []
-            if right1 > left2 and left1 < left2:
-                overlaps.append('left')
-            if left1 < right2 and right1 > right2:
-                overlaps.append('right')
-            if bottom1 > top2 and top1 < top2:
-                overlaps.append('top')
-            if top1 < bottom2 and bottom1 > bottom2:
-                overlaps.append('bottom')
-            return overlaps
-        return []
-        """
-    def overlapping(self, label):
-        overlapping_items = self.canvas.find_overlapping(*self.canvas.bbox(label.id))
-        collisions = {}
+    #def get_overlap_side(self, bbox1, bbox2):
+    #    left1, top1, right1, bottom1 = bbox1
+    #    left2, top2, right2, bottom2 = bbox2
 
-        my_bbox = self.canvas.bbox(label.id)
-        for overlap_item in overlapping_items:
-            if overlap_item != label.id:
-                # Get the collision between my bbox and the other bbox
-                other_bbox = self.canvas.bbox(overlap_item)
-                #collisions[overlap_item] = self.determine_edges(my_bbox, other_bbox, overlap_item)
-                collisions[overlap_item] = self.simple_edge(my_bbox, other_bbox, overlap_item)
+    #    if right1 > left2 and left1 < right2 and bottom1 > top2 and top1 < bottom2:
+
+    #        overlaps = []
+    #        if right1 > left2 and left1 < left2:
+    #            overlaps.append('left')
+    #        if left1 < right2 and right1 > right2:
+    #            overlaps.append('right')
+    #        if bottom1 > top2 and top1 < top2:
+    #            overlaps.append('top')
+    #        if top1 < bottom2 and bottom1 > bottom2:
+    #            overlaps.append('bottom')
+    #        return overlaps
+    #    return []
+
+    #def overlapping(self, label):
+    #    overlapping_items = self.canvas.find_overlapping(*self.canvas.bbox(label.id))
+    #    collisions = {}
+
+    #    my_bbox = self.canvas.bbox(label.id)
+    #    for overlap_item in overlapping_items:
+    #        if overlap_item != label.id:
+    #            # Get the collision between my bbox and the other bbox
+    #            other_bbox = self.canvas.bbox(overlap_item)
+    #            #collisions[overlap_item] = self.determine_edges(my_bbox, other_bbox, overlap_item)
+    #            collisions[overlap_item] = self.simple_edge(my_bbox, other_bbox, overlap_item)
 
 
-        return collisions
+    #   return collisions
 
     def simple_edge(self, my_bbox, other_bbox, id):
         edges = {'id': id, 'left': False, 'right': False, 'top': False, 'bottom': False}
