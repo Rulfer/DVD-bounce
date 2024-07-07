@@ -1,7 +1,6 @@
 from tkinter import *
 import random
-from PIL import Image, ImageTk
-import image_getter
+
 
 class MyLabel:
     def __init__(self, tk, img, c):
@@ -22,7 +21,8 @@ class MyLabel:
         self.img_height = img.height()
         self.go_right = random.choice([True, False])
         self.go_up = random.choice([True, False])
-        self.id = c.create_window(self.xPos, self.yPos, window=self.label, anchor='nw')
+        #self.id = c.create_window(self.xPos, self.yPos, window=self.label, anchor='nw')
+        self.id = c.create_image(self.xPos, self.yPos, image=img, anchor='nw')
         self.canvas = c
         self.tk = tk
 

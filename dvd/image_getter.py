@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 import io
 
 def get_image(active_tkinter):
-    img = Image.open("images/ODDBALL.png").convert("RGBA")
+    img = Image.open("images/snapchat_filter.png").convert("RGBA")
     width, height = img.size
     new_size = (int(width * 0.5), int(height * 0.5))
     resized_image = img.resize(new_size)
