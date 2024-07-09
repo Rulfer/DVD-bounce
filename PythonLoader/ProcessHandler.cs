@@ -25,7 +25,6 @@ namespace Python_Loader
 
         private EventHandler OnExit = null;
 
- 
         public ProcessHandler(string fileName, EventHandler onDone, string arguments = null)
         {
             if (Instance != null) 

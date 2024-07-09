@@ -35,9 +35,11 @@ namespace Python_Loader
             else
                 txtLocalVersion.Text = "Not installed";
 
-            btnInstallPython.Show();
-            btnLaunchProgram.Show();
-            btnCloseProgram.Hide();
+            txtStatus.Text = "PIP Processing";
+
+            //btnInstallPython.Show();
+            //btnLaunchProgram.Show();
+            //btnCloseProgram.Hide();
         }
 
         public void OnPythonClosed()

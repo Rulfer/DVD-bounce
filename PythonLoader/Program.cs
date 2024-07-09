@@ -23,6 +23,11 @@ namespace Python_Loader
         private static PythonVersionManager.Python _pythonValueCache;
         private static ProcessHandler ProcessHandler = null;
 
+        #region Cached data
+        private static string _pathToMainPy = null;
+        private static string WorkingDirectory;
+        #endregion
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -33,6 +38,13 @@ namespace Python_Loader
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnApplicationQuit);
+
+
+#if DEBUG
+            WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+#else
+            WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+#endif
 
             RedirectConsoleOutput();
             try
@@ -55,7 +67,7 @@ namespace Python_Loader
 
         private static void RedirectConsoleOutput()
         {
-            string logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "myapp_log.txt");
+            string logFilePath = Path.Combine(WorkingDirectory, "myapp_log.txt");
             StreamWriter logFile = new StreamWriter(logFilePath);
             logFile.AutoFlush = true;
             Console.SetOut(logFile);
@@ -78,17 +90,35 @@ namespace Python_Loader
             _pythonValueCache.version = result.version; 
             _pythonValueCache.path = result.path;
 
+            if(result.isInstalled)
+            {
+#if DEBUG
+            //string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+                _pathToMainPy = Path.Combine(WorkingDirectory, "dvd/main.py");
+#else
+                _pathToMainPy = Path.Combine(WorkingDirectory, "Python/Build/main.py");
+#endif
+            }
+
             Form.OnPythonDataRetrieved(result);
+        }
+
+        /// <summary>
+        /// Identify installed packages and installing missing / update existing.
+        /// </summary>
+        public static void LoadPIPPatcher()
+        {
+            ProcessHandler = new ProcessHandler(_pythonValueCache.path, arguments: "-m list", onDone: );
         }
 
         public static void LoadInstallPython()
         {
             string path;
 #if DEBUG
-            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            path = Path.Combine(gitFolder, "python-3.12.0-amd64.exe");
+            //string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            path = Path.Combine(WorkingDirectory, "python-3.12.0-amd64.exe");
 #else
-            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Installer/python-3.12.0-amd64.exe");
+            path = Path.Combine(WorkingDirectory, "Python/Installer/python-3.12.0-amd64.exe");
 #endif
             CloseProcess();
 
@@ -104,26 +134,24 @@ namespace Python_Loader
 
         public static void LoadPythonProgram()
         {
-            //string path = @"F:\PersonligeProsjekter\DVD-bounce\dvd\main.py";
-            //string path = @"F:\PersonligeProsjekter\DVD-bounce\PythonLoader\dvd\main.py";
             string path;
-#if DEBUG
-            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            path = Path.Combine(gitFolder, "dvd/main.py");
-#else
-            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Build/main.py");
-#endif
+//#if DEBUG
+//            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+//            path = Path.Combine(gitFolder, "dvd/main.py");
+//#else
+//            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Build/main.py");
+//#endif
             Debug.WriteLine("python.exe path: " + _pythonValueCache.path);
-            Debug.WriteLine("DVD path: " + path);
+            Debug.WriteLine("DVD path: " + _pathToMainPy);
             Console.WriteLine("python.exe path: " + _pythonValueCache.path);
-            Console.WriteLine("DVD path: " + path);
+            Console.WriteLine("DVD path: " + _pathToMainPy);
             Console.WriteLine("Directory.GetCurrentDirectory(): " + Directory.GetCurrentDirectory());
 
             CloseProcess();
 
             try
             {
-                ProcessHandler = new ProcessHandler(arguments: path, onDone: new EventHandler(OnProcessExited), fileName: _pythonValueCache.path);
+                ProcessHandler = new ProcessHandler(arguments: _pathToMainPy, onDone: new EventHandler(OnProcessExited), fileName: _pythonValueCache.path);
             }
             catch (Exception ex)
             {
