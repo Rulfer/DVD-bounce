@@ -2,9 +2,9 @@ using System.Diagnostics;
 
 namespace Python_Loader
 {
-    public partial class Form1 : Form
+    public partial class MainGUI : Form
     {
-        public Form1()
+        public MainGUI()
         {
             InitializeComponent();
 
@@ -17,9 +17,7 @@ namespace Python_Loader
             btnCloseProgram.Click += OnCloseProgramClicked;
         }
 
-
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form_Load(object sender, EventArgs e)
         {
             txtStatus.Text = "Hello!";
             Program.OnFormLoaded();
@@ -44,16 +42,15 @@ namespace Python_Loader
 
         public void OnPythonClosed()
         {
-            btnInstallPython.Show();
-            btnLaunchProgram.Show();
-            btnCloseProgram.Hide();
+            Invoke(new Action(() =>
+            {
+                btnInstallPython.Show();
+                btnLaunchProgram.Show();
+                btnCloseProgram.Hide();
+            }));
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        #region UI events
         private void OnInstallPythonClicked(object? sender, EventArgs e)
         {
             btnInstallPython.Hide();
@@ -75,5 +72,6 @@ namespace Python_Loader
             Program.CloseProcess();
             OnPythonClosed();
         }
+        #endregion
     }
 }

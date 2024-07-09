@@ -10,7 +10,7 @@
 		<StartupObject>Python_Loader.Program</StartupObject>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<SignAssembly>False</SignAssembly>
-		<BaseOutputPath>F:\Test\</BaseOutputPath>
+		<BaseOutputPath></BaseOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

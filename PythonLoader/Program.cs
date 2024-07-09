@@ -6,13 +6,22 @@ using System.IO;
 
 namespace Python_Loader
 {
+    /// <summary>
+    /// Main handler for my program. This holds a reference to all other handlers.
+    /// </summary>
     public static class Program
     {
-        public static Form1 Form { get; private set; } = null;
+        /// <summary>
+        /// The main GUI of this application.
+        /// </summary>
+        public static MainGUI Form { get; private set; } = null;
+        /// <summary>
+        /// Retrieve version of existing Python installation, if any.
+        /// </summary>
         public static PythonVersionManager PythonVersionManager { get; private set; } = new PythonVersionManager();
 
-        private static PythonVersionManager.Python _python;
-        private static Process _process = null;
+        private static PythonVersionManager.Python _pythonValueCache;
+        private static ProcessHandler ProcessHandler = null;
 
         /// <summary>
         ///  The main entry point for the application.
@@ -23,12 +32,11 @@ namespace Python_Loader
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnApplicationQuit);
 
-            RedirectConsoleOutput();
-            Console.WriteLine("Hello, world");
             try
             {
-                Form = new Form1();
+                Form = new MainGUI();
                 Application.Run(Form);
             }
             catch (Exception ex)
@@ -36,7 +44,12 @@ namespace Python_Loader
                 Console.WriteLine(ex.StackTrace);
                 Console.WriteLine(ex.Message);
             }
+        }
 
+        static void OnApplicationQuit(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Farewell, world.");
+            ProcessHandler?.Terminate();
         }
 
         private static void RedirectConsoleOutput()
@@ -58,11 +71,11 @@ namespace Python_Loader
 
         public static void OnPythonDataRetrieved(PythonVersionManager.Python result)
         {
-            _python = new PythonVersionManager.Python();
-            _python.isInterrupted = result.isInterrupted; 
-            _python.isInstalled = result.isInstalled; 
-            _python.version = result.version; 
-            _python.path = result.path;
+            _pythonValueCache = new PythonVersionManager.Python();
+            _pythonValueCache.isInterrupted = result.isInterrupted; 
+            _pythonValueCache.isInstalled = result.isInstalled; 
+            _pythonValueCache.version = result.version; 
+            _pythonValueCache.path = result.path;
 
             Form.OnPythonDataRetrieved(result);
         }
@@ -71,7 +84,7 @@ namespace Python_Loader
         {
             string path;
 #if DEBUG
-            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
             path = Path.Combine(gitFolder, "python-3.12.0-amd64.exe");
 #else
             path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Installer/python-3.12.0-amd64.exe");
@@ -80,20 +93,7 @@ namespace Python_Loader
 
             try
             {
-                // Create a new process to start the Python script
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = path;
-                //psi.Arguments = path;
-                psi.UseShellExecute = false;
-                psi.RedirectStandardOutput = true;
-                psi.RedirectStandardError = true;
-                psi.CreateNoWindow = true;
-
-
-                _process = new Process();
-                _process.Exited += new EventHandler(OnProcessExited);
-                _process.StartInfo = psi;
-                _process.Start();
+                ProcessHandler = new ProcessHandler(path, new EventHandler(OnProcessExited));
             }
             catch (Exception ex)
             {
@@ -107,14 +107,14 @@ namespace Python_Loader
             //string path = @"F:\PersonligeProsjekter\DVD-bounce\PythonLoader\dvd\main.py";
             string path;
 #if DEBUG
-            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
             path = Path.Combine(gitFolder, "dvd/main.py");
 #else
             path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Build/main.py");
 #endif
-            Debug.WriteLine("python.exe path: " + _python.path);
+            Debug.WriteLine("python.exe path: " + _pythonValueCache.path);
             Debug.WriteLine("DVD path: " + path);
-            Console.WriteLine("python.exe path: " + _python.path);
+            Console.WriteLine("python.exe path: " + _pythonValueCache.path);
             Console.WriteLine("DVD path: " + path);
             Console.WriteLine("Directory.GetCurrentDirectory(): " + Directory.GetCurrentDirectory());
 
@@ -122,20 +122,7 @@ namespace Python_Loader
 
             try
             {
-                // Create a new process to start the Python script
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = _python.path;
-                psi.Arguments = path;
-                psi.UseShellExecute = false;
-                psi.RedirectStandardOutput = true;
-                psi.RedirectStandardError = true;
-                psi.CreateNoWindow = true;
-
-
-                _process = new Process();
-                _process.Exited += new EventHandler(OnProcessExited);
-                _process.StartInfo = psi;
-                _process.Start();
+                ProcessHandler = new ProcessHandler(arguments: path, onDone: new EventHandler(OnProcessExited), fileName: _pythonValueCache.path);
             }
             catch (Exception ex)
             {
@@ -145,18 +132,12 @@ namespace Python_Loader
 
         public static void CloseProcess()
         {
-            if (_process == null)
-                return;
-
-            _process.Exited -= OnProcessExited;
-            _process.Kill();
-            //_process.Close();
-            //_process.Dispose();
+            ProcessHandler?.Terminate();
         }
 
-        private static void OnProcessExited(object sender, System.EventArgs e)
+        private static void OnProcessExited(object? sender, EventArgs e)
         {
-            _process = null;
+            CloseProcess();
             Form.OnPythonClosed();
         }
     }

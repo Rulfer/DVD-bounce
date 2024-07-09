@@ -1,6 +1,6 @@
 ﻿namespace Python_Loader
 {
-    partial class Form1
+    partial class MainGUI
     {
         /// <summary>
         ///  Required designer variable.
@@ -56,7 +56,6 @@
             textBox1.Size = new Size(130, 23);
             textBox1.TabIndex = 1;
             textBox1.Text = "Recommended version: 312";
-            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // txtLocalVersion_Header
             // 
@@ -128,7 +127,7 @@
             Controls.Add(txtStatus);
             Name = "Form1";
             Text = "Form1";
-            Load += Form1_Load;
+            Load += Form_Load;
             ResumeLayout(false);
             PerformLayout();
         }
