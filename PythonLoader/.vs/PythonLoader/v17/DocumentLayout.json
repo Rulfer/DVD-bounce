@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\processhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:processhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\processhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:processhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\pythonloader.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
@@ -34,13 +34,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAgwB4AAABDAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAABBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-07T21:53:10.726Z",
               "EditorCaption": ""
@@ -71,13 +71,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAHAAAAAAAAAAAAAYwIYAAAAkAAAA",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAcwCQAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-07T21:15:46.57Z",
               "EditorCaption": ""
@@ -90,7 +90,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ProcessHandler.cs",
               "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\ProcessHandler.cs",
               "RelativeDocumentMoniker": "ProcessHandler.cs",

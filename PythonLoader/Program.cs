@@ -34,6 +34,7 @@ namespace Python_Loader
             ApplicationConfiguration.Initialize();
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnApplicationQuit);
 
+            RedirectConsoleOutput();
             try
             {
                 Form = new MainGUI();
