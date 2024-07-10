@@ -30,21 +30,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 325,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PipHandler.cs",
-              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PipHandler.cs",
-              "RelativeDocumentMoniker": "PipHandler.cs",
-              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PipHandler.cs",
-              "RelativeToolTip": "PipHandler.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T18:06:31.556Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -53,9 +40,22 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAFsAAAAAAAAAAAAawG4AAABmAAAA",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAIwHAAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-07T21:15:46.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PipHandler.cs",
+              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PipHandler.cs",
+              "RelativeDocumentMoniker": "PipHandler.cs",
+              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PipHandler.cs",
+              "RelativeToolTip": "PipHandler.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABIAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T18:06:31.556Z",
               "EditorCaption": ""
             },
             {
@@ -68,8 +68,7 @@
               "RelativeToolTip": "Form1.cs",
               "ViewState": "AQIAAAUAAAAAAAAAAAAQwCUAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T17:24:53.331Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T17:24:53.331Z"
             },
             {
               "$type": "Document",
@@ -79,7 +78,7 @@
               "RelativeDocumentMoniker": "PythonVersionManager.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PythonVersionManager.cs",
               "RelativeToolTip": "PythonVersionManager.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAgwC8AAAAoAAAA",
+              "ViewState": "AQIAABYAAAAAAAAAAAAgwC8AAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-07T21:35:54.08Z",
               "EditorCaption": ""
@@ -98,7 +97,7 @@
               "RelativeDocumentMoniker": "ProcessHandler.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\ProcessHandler.cs",
               "RelativeToolTip": "ProcessHandler.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAnwDAAAAAAAAAA",
+              "ViewState": "AQIAAEQAAAAAAAAAAADgv1EAAABUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-09T15:29:51.247Z",
               "EditorCaption": ""

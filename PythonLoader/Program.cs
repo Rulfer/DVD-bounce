@@ -20,8 +20,9 @@ namespace Python_Loader
         /// </summary>
         public static PythonVersionManager PythonVersionManager { get; private set; } = new PythonVersionManager();
 
-        private static PythonVersionManager.Python _pythonValueCache;
-        private static ProcessHandler ProcessHandler = null;
+        public static PythonVersionManager.Python PythonValueCache;
+        internal static ProcessHandler ProcessHandler = null;
+        internal static PipHandler PipHandler { get; private set; } = new PipHandler();
 
         #region Cached data
         private static string _pathToMainPy = null;
@@ -84,11 +85,11 @@ namespace Python_Loader
 
         public static void OnPythonDataRetrieved(PythonVersionManager.Python result)
         {
-            _pythonValueCache = new PythonVersionManager.Python();
-            _pythonValueCache.isInterrupted = result.isInterrupted; 
-            _pythonValueCache.isInstalled = result.isInstalled; 
-            _pythonValueCache.version = result.version; 
-            _pythonValueCache.path = result.path;
+            PythonValueCache = new PythonVersionManager.Python();
+            PythonValueCache.isInterrupted = result.isInterrupted; 
+            PythonValueCache.isInstalled = result.isInstalled; 
+            PythonValueCache.version = result.version; 
+            PythonValueCache.path = result.path;
 
             if(result.isInstalled)
             {
@@ -101,6 +102,7 @@ namespace Python_Loader
             }
 
             Form.OnPythonDataRetrieved(result);
+            LoadPIPPatcher();
         }
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace Python_Loader
         /// </summary>
         public static void LoadPIPPatcher()
         {
-            ProcessHandler = new ProcessHandler(_pythonValueCache.path, arguments: "-m list", onDone: );
+            PipHandler.Update();
         }
 
         public static void LoadInstallPython()
@@ -139,11 +141,12 @@ namespace Python_Loader
 //            string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
 //            path = Path.Combine(gitFolder, "dvd/main.py");
 //#else
+
 //            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Python/Build/main.py");
 //#endif
-            Debug.WriteLine("python.exe path: " + _pythonValueCache.path);
+            Debug.WriteLine("python.exe path: " + PythonValueCache.path);
             Debug.WriteLine("DVD path: " + _pathToMainPy);
-            Console.WriteLine("python.exe path: " + _pythonValueCache.path);
+            Console.WriteLine("python.exe path: " + PythonValueCache.path);
             Console.WriteLine("DVD path: " + _pathToMainPy);
             Console.WriteLine("Directory.GetCurrentDirectory(): " + Directory.GetCurrentDirectory());
 
@@ -151,7 +154,7 @@ namespace Python_Loader
 
             try
             {
-                ProcessHandler = new ProcessHandler(arguments: _pathToMainPy, onDone: new EventHandler(OnProcessExited), fileName: _pythonValueCache.path);
+                ProcessHandler = new ProcessHandler(optionalData: new ProcessHandler.OptionalData(arguments: _pathToMainPy), onDone: new EventHandler(OnProcessExited), fileName: PythonValueCache.path);
             }
             catch (Exception ex)
             {
