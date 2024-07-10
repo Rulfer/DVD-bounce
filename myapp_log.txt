@@ -1,3 +1,6 @@
 OnFormLoaded
 Version: 312
 path: C:\Users\rosse\AppData\Local\Programs/Python/Python312/python.exe
+python.exe path: C:\Users\rosse\AppData\Local\Programs/Python/Python312/python.exe
+DVD path: F:\PersonligeProsjekter\DVD-bounce\dvd/main.py
+Directory.GetCurrentDirectory(): F:\PersonligeProsjekter\DVD-bounce\PythonLoader\Debug\net8.0-windows10.0.17763.0

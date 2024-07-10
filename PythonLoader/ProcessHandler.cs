@@ -12,7 +12,7 @@ namespace Python_Loader
 
     internal class ProcessHandler
     {
-        internal static ProcessHandler Instance;
+        internal static ProcessHandler Instance = null;
 
         /// <summary>
         /// Includes optional parameters for the ProcessHandler.
@@ -23,7 +23,7 @@ namespace Python_Loader
             /// <summary>
             /// This will set the <see cref="ProcessStartInfo.UseShellExecute"/> value.
             /// </summary>
-            internal bool UseShellExecute { get; set; } = true;
+            internal bool UseShellExecute { get; set; } = false;
             /// <summary>
             /// This will set the <see cref="ProcessStartInfo.CreateNoWindow"/> value.
             /// </summary>
@@ -32,7 +32,7 @@ namespace Python_Loader
             internal DataReceivedEventHandler onErrorReceived = null;
 
             internal OptionalData(string arguments = null, DataReceivedEventHandler onDataReceived = null, DataReceivedEventHandler onErrorReceived = null,
-                bool UseShellExecute = false, bool CreateNoWindow = false) 
+                bool UseShellExecute = false, bool CreateNoWindow = true) 
             {
                 this.Arguments = arguments;
                 this.onDataReceived = onDataReceived;
