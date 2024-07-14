@@ -1,3 +1,1 @@
 OnFormLoaded
-Version: 312
-path: C:\Users\rosse\AppData\Local\Programs/Python/Python312/python.exe

@@ -74,7 +74,8 @@
             textBox2.ReadOnly = true;
             textBox2.Size = new Size(80, 23);
             textBox2.TabIndex = 3;
-            textBox2.Text = "312";
+            textBox2.Text = "3.12.3";
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // txtLocalVersion
             // 
@@ -112,7 +113,7 @@
             btnCloseProgram.Text = "Close Python";
             btnCloseProgram.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // MainGUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -125,7 +126,7 @@
             Controls.Add(txtLocalVersion_Header);
             Controls.Add(textBox1);
             Controls.Add(txtStatus);
-            Name = "Form1";
+            Name = "MainGUI";
             Text = "Form1";
             Load += Form_Load;
             ResumeLayout(false);

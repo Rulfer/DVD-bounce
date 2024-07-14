@@ -1,3 +1,4 @@
+using Python_Loader.Helpers;
 using System.Diagnostics;
 
 namespace Python_Loader
@@ -8,9 +9,9 @@ namespace Python_Loader
         {
             InitializeComponent();
 
-            btnInstallPython.Hide();
-            btnLaunchProgram.Hide();
-            btnCloseProgram.Hide();
+            btnInstallPython.HideInvoke();
+            btnLaunchProgram.HideInvoke();
+            btnCloseProgram.HideInvoke();
 
             btnLaunchProgram.Click += OnLaunchProgramClicked;
             btnInstallPython.Click += OnInstallPythonClicked;
@@ -30,26 +31,23 @@ namespace Python_Loader
 
         public void OnPythonDataRetrieved(PythonVersionManager.Python result)
         {
-            if (result.isInstalled)
-                txtLocalVersion.Text = result.version.ToString();
-            else
-                txtLocalVersion.Text = "Not installed";
+            string localVersion = result.isInstalled ? result.version.ToString() : "Not installed";
+            txtLocalVersion.TextInvoke(localVersion);
+            txtStatus.TextInvoke(result.isReady ? "PIP Processing" : "Please install python / update");
 
-            txtStatus.Text = "PIP Processing";
+            if (!result.isInstalled || !result.isReady)
+                btnInstallPython.ShowInvoke();
+            if (result.isReady)
+                btnLaunchProgram.ShowInvoke();
 
-            //btnInstallPython.Show();
-            //btnLaunchProgram.Show();
             //btnCloseProgram.Hide();
         }
 
         public void OnPythonClosed()
         {
-            Invoke(new Action(() =>
-            {
-                btnInstallPython.Show();
-                btnLaunchProgram.Show();
-                btnCloseProgram.Hide();
-            }));
+            btnInstallPython.ShowInvoke();
+            btnLaunchProgram.ShowInvoke();
+            btnCloseProgram.HideInvoke();
         }
 
         #region UI events
@@ -74,6 +72,36 @@ namespace Python_Loader
             Program.CloseProcess();
             OnPythonClosed();
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region Overriding for thread safety
+        public new string Text
+        {
+            get
+            {
+                return base.Text;
+            }
+            set
+            {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        base.Text = value;
+                    });
+                }
+                else
+                {
+                    base.Text = value;
+                }
+            }
+        }
+
         #endregion
     }
 }

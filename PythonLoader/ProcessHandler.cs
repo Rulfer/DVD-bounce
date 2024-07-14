@@ -91,8 +91,8 @@ namespace Python_Loader
             Debug.WriteLine(this + $" arguments are {Process.StartInfo.Arguments}");
 
             Process.Start();
-            Process.BeginOutputReadLine();
-            Process.BeginErrorReadLine();
+            Process?.BeginOutputReadLine();
+            Process?.BeginErrorReadLine();
         }
 
         private void OnProcessDone(object sender, System.EventArgs args)

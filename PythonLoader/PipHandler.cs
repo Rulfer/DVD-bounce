@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Python_Loader.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
+using Version = Python_Loader.Helpers.Version;
 
 namespace Python_Loader
 {
@@ -22,22 +24,22 @@ namespace Python_Loader
             /// <summary>
             /// If this is null then no local version could be found.
             /// </summary>
-            public Version? LocalVersion;
+            public Version LocalVersion;
 
             public Package(string Name, string Version)
             {
                 this.Name = Name;
-                this.ExpectedVersion = new Version(ConvertVersion(Version));
+                this.ExpectedVersion = new Version(Version);
             }
 
             public void SetLocalVersion(string version)
             {
-                this.LocalVersion = new Version(ConvertVersion(version));
+                this.LocalVersion = new Version(version);
             }
 
             public bool UpdateRequired(out string optionalParameter)
             {
-                if (!LocalVersion.HasValue)
+                if (LocalVersion == null)
                 {
                     optionalParameter = null;
                     return true;
@@ -45,28 +47,20 @@ namespace Python_Loader
 
                 optionalParameter = "--upgrade";
 
-                if (LocalVersion.Value.Major < ExpectedVersion.Major)
-                    return true;
-                if (LocalVersion.Value.Minor < ExpectedVersion.Minor)
-                    return true;
-                if (LocalVersion.Value.Patch < ExpectedVersion.Patch)
-                    return true;
+                bool outdated = ExpectedVersion.IsHigherVersion(LocalVersion, out bool isEqual);
 
-                return false;
-            }
-        }
+                if (outdated && isEqual)
+                    outdated = false;
 
-        private struct Version
-        {
-            public int Major;
-            public int Minor;
-            public int Patch;
+                //if (LocalVersion.Major < ExpectedVersion.Major)
+                //    return true;
+                //if (LocalVersion.Minor < ExpectedVersion.Minor)
+                //    return true;
+                //if (LocalVersion.Patch < ExpectedVersion.Patch)
+                //    return true;
 
-            public Version((int major, int minor, int patch) version)
-            {
-                this.Major = version.major;
-                this.Minor = version.minor;
-                this.Patch = version.patch;
+                //return false;
+                return outdated;
             }
         }
 
@@ -82,14 +76,14 @@ namespace Python_Loader
         internal void Update()
         {
             Debug.WriteLine(this + " Update()");
-            string pythonExePath = Program.PythonValueCache.path;
+            //string pythonExePath = Program.PythonExePath;
             ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                 arguments: "-m pip list",
                 onDataReceived: OnDataReceived,
                 onErrorReceived: OnErrorReceived);
-            Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
-            Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
-            Program.ProcessHandler = new ProcessHandler(pythonExePath, OnProcessClosed, optionalParameters);
+            //Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
+            //Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
+            Program.ProcessHandler = new ProcessHandler(fileName: "py", OnProcessClosed, optionalParameters);
         }
 
         #region Retrieve installations
@@ -99,8 +93,12 @@ namespace Python_Loader
 
             foreach (Package package in _packages)
             {
-                Debug.WriteLine(this + $" Package: {package.Name}=(Local: {package.LocalVersion.Value.Major}.{package.LocalVersion.Value.Minor}.{package.LocalVersion.Value.Patch}), " +
-                    $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                if (package.LocalVersion == null)
+                    Debug.WriteLine(this + $" Package: {package.Name}=(NOT INSTALLED), " +
+                        $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                else
+                    Debug.WriteLine(this + $" Package: {package.Name}=(Local: {package.LocalVersion.Major}.{package.LocalVersion.Minor}.{package.LocalVersion.Patch}), " +
+                        $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
             }
 
             int reference = Array.FindIndex(_packages, x => x.UpdateRequired(out optionalParameter));
@@ -113,14 +111,15 @@ namespace Python_Loader
                 string argument = "-m pip install " + optionalParameter + "" + _packages[reference].Name;
                 Debug.WriteLine(this + " Install package with argument: " + argument);
 
-                string pythonExePath = Program.PythonValueCache.path;
+                //string pythonExePath = Program.PythonValueCache.path;
                 ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                     arguments: argument,
                     onDataReceived: OnUpdateDataReceived,
-                    onErrorReceived: OnUpdateErrorReceived);
-                Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
-                Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
-                Program.ProcessHandler = new ProcessHandler(pythonExePath, OnUpdadeProcessDone, optionalParameters);
+                    onErrorReceived: OnUpdateErrorReceived,
+                    CreateNoWindow: false);
+                //Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
+                //Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
+                Program.ProcessHandler = new ProcessHandler(fileName: "py", onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
             }
             else
             {
@@ -173,20 +172,6 @@ namespace Python_Loader
         }
         #endregion
 
-        static internal (int major, int minor, int patch) ConvertVersion(string version)
-        {
-            if (!version.Contains("."))
-            {
-                // Assume the package only contains a major version.
-                return (int.Parse(version), 0, 0);
-            }
-            
-            string[] parts = version.Split('.');
-            int major = int.Parse(parts[0]);
-            int minor = parts.Length > 1 ? int.Parse(parts[1]) : 0;
-            int patch = parts.Length > 2 ? int.Parse(parts[2]) : 0;
 
-            return (major, minor, patch);
-        }
     }
 }
