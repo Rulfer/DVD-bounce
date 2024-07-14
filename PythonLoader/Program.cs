@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using System;
 using System.Management;
 using System.IO;
+using System.IO.Compression;
+using System.Reflection;
 
 namespace Python_Loader
 {

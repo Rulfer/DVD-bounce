@@ -9,6 +9,7 @@ using System.Threading;
 using Microsoft.Win32;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Compression;
 
 namespace Python_Loader
 {
@@ -17,6 +18,7 @@ namespace Python_Loader
         private CancellationTokenSource _source;
 
         private const int REQUIRED_VERSION = 312;
+        private const string _pythonZipPath = "PythonVersions/python3.12.4.zip";
 
         public struct Python
         {
@@ -31,6 +33,21 @@ namespace Python_Loader
 
         public async void RetrieveVersion()
         {
+        // How to extract zip files
+        https://learn.microsoft.com/en-us/dotnet/standard/io/how-to-compress-and-extract-files
+
+            string workingDir;
+
+#if DEBUG
+            workingDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+#else
+            workingDir = Directory.GetCurrentDirectory().FullName;
+#endif
+
+            string zipPath = Path.Combine(workingDir, _pythonZipPath);
+            string zipTarget = Path.Combine(workingDir, "PythonVersions/Python3.12.4");
+            ZipFile.ExtractToDirectory(zipPath, zipTarget);
+
             _source = new CancellationTokenSource();
             Python result = await Task.Run(() => IsInstalled(_source.Token));
             
@@ -94,6 +111,27 @@ namespace Python_Loader
 
                 }
 
+
+                // Additional check for Python installations via Microsoft App Store
+                string appStorePythonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Microsoft", "WindowsApps");
+                if (Directory.Exists(appStorePythonPath))
+                {
+                    var pythonExes = Directory.GetFiles(appStorePythonPath, "python*.exe");
+                    if (pythonExes.Length > 0)
+                    {
+                        result.isInstalled = true;
+                        result.path = pythonExes.First(); // Take the first Python executable found
+                        string versionOutput = await GetPythonVersion(result.path, token);
+                        if (!string.IsNullOrEmpty(versionOutput))
+                        {
+                            string[] versions = versionOutput.Split(".");
+                            long version = int.Parse(versions[0] + versions[1]);
+                            result.version = version;
+                        }
+                        return result;
+                    }
+                }
+
                 return result;
             }
             catch (OperationCanceledException)
@@ -108,6 +146,33 @@ namespace Python_Loader
                 Debug.WriteLine("An error occurred: " + e.Message);
                 Console.WriteLine("An error occurred: " + e.Message);
                 return result;
+            }
+        }
+
+        private static async Task<string> GetPythonVersion(string pythonPath, CancellationToken token)
+        {
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = pythonPath,
+                    Arguments = "--version",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = new Process { StartInfo = startInfo })
+                {
+                    process.Start();
+                    string output = await process.StandardOutput.ReadToEndAsync();
+                    process.WaitForExit();
+                    return output.Replace("Python ", "").Trim();
+                }
+            }
+            catch
+            {
+                return string.Empty;
             }
         }
     }
