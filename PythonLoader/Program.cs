@@ -87,14 +87,20 @@ namespace Python_Loader
             //LoadPythonProgram();
         }
 
-        public static void OnPythonLocated(PythonVersionManager.Python result)
-        {
-            if (result.isReady)
-            {
-                LoadPIPPatcher();
-            }
+        //public static void OnPythonLocated(PythonVersionManager.Python result)
+        //{
+        //    if (result.isReady)
+        //    {
+        //        LoadPIPPatcher();
+        //    }
 
-            Form.OnPythonDataRetrieved(result);
+        //    Form.OnPythonDataRetrieved(result);
+        //}
+
+        public static void OnEmbeddedPythonReady()
+        {
+            Form.OnPythonLoaded();
+            LoadPIPPatcher();
         }
 
         /// <summary>
@@ -107,18 +113,20 @@ namespace Python_Loader
 
         public static void LoadInstallPython()
         {
-            string path;
+            string fileName;
 #if DEBUG
             //string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            path = Path.Combine(WorkingDirectory, "python-3.12.0-amd64.exe");
+            //path = Path.Combine(WorkingDirectory, "python-3.12.0-amd64.exe");
+            fileName = "python-3.12.0-amd64.exe";
 #else
-            path = Path.Combine(WorkingDirectory, "Python/Installer/python-3.12.0-amd64.exe");
+            //path = Path.Combine(WorkingDirectory, "Python/Installer/python-3.12.0-amd64.exe");
+            fileName = "Python/Installer/python-3.12.0-amd64.exe";
 #endif
             CloseProcess();
 
             try
             {
-                ProcessHandler = new ProcessHandler(path, new EventHandler(OnProcessExited));
+                ProcessHandler = new ProcessHandler(fileName: fileName, workingDirectory: WorkingDirectory, new EventHandler(OnProcessExited));
             }
             catch (Exception ex)
             {
@@ -134,8 +142,14 @@ namespace Python_Loader
 
             try
             {
+#if DEBUG
                 _pathToMainPy = Path.Combine(WorkingDirectory, "dvd/main.py");
-                ProcessHandler = new ProcessHandler(optionalData: new ProcessHandler.OptionalData(arguments: _pathToMainPy), onDone: new EventHandler(OnProcessExited), fileName: "py");
+#else
+                _pathToMainPy = Path.Combine(WorkingDirectory, "Python/Build/main.py");
+
+#endif
+                //ProcessHandler = new ProcessHandler(optionalData: new ProcessHandler.OptionalData(arguments: _pathToMainPy), onDone: new EventHandler(OnProcessExited), fileName: "py");
+                ProcessHandler = new ProcessHandler(workingDirectory: PythonVersionManager.EmbeddedPath, fileName: "py", argument: _pathToMainPy, optionalData: new ProcessHandler.OptionalData(), onDone: new EventHandler(OnProcessExited));
             }
             catch (Exception ex)
             {

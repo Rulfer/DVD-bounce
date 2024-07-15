@@ -36,21 +36,27 @@
             btnInstallPython = new Button();
             btnLaunchProgram = new Button();
             btnCloseProgram = new Button();
+            groupBox1 = new GroupBox();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // txtStatus
             // 
             txtStatus.AccessibleRole = AccessibleRole.None;
-            txtStatus.Location = new Point(307, 61);
+            txtStatus.BackColor = SystemColors.InactiveBorder;
+            txtStatus.BorderStyle = BorderStyle.None;
+            txtStatus.Location = new Point(303, 79);
             txtStatus.Name = "txtStatus";
             txtStatus.ReadOnly = true;
-            txtStatus.Size = new Size(204, 23);
+            txtStatus.ShortcutsEnabled = false;
+            txtStatus.Size = new Size(204, 16);
             txtStatus.TabIndex = 0;
             txtStatus.Text = "Checking status";
+            txtStatus.TextAlign = HorizontalAlignment.Center;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(12, 167);
+            textBox1.Location = new Point(-2, 22);
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
             textBox1.Size = new Size(130, 23);
@@ -59,7 +65,7 @@
             // 
             // txtLocalVersion_Header
             // 
-            txtLocalVersion_Header.Location = new Point(12, 206);
+            txtLocalVersion_Header.Location = new Point(-2, 61);
             txtLocalVersion_Header.Name = "txtLocalVersion_Header";
             txtLocalVersion_Header.ReadOnly = true;
             txtLocalVersion_Header.Size = new Size(130, 23);
@@ -69,7 +75,7 @@
             // textBox2
             // 
             textBox2.Enabled = false;
-            textBox2.Location = new Point(148, 167);
+            textBox2.Location = new Point(134, 22);
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
             textBox2.Size = new Size(80, 23);
@@ -79,7 +85,7 @@
             // 
             // txtLocalVersion
             // 
-            txtLocalVersion.Location = new Point(148, 206);
+            txtLocalVersion.Location = new Point(134, 61);
             txtLocalVersion.Name = "txtLocalVersion";
             txtLocalVersion.ReadOnly = true;
             txtLocalVersion.Size = new Size(80, 23);
@@ -88,7 +94,7 @@
             // 
             // btnInstallPython
             // 
-            btnInstallPython.Location = new Point(224, 310);
+            btnInstallPython.Location = new Point(334, 201);
             btnInstallPython.Name = "btnInstallPython";
             btnInstallPython.Size = new Size(134, 51);
             btnInstallPython.TabIndex = 5;
@@ -97,7 +103,7 @@
             // 
             // btnLaunchProgram
             // 
-            btnLaunchProgram.Location = new Point(444, 310);
+            btnLaunchProgram.Location = new Point(334, 201);
             btnLaunchProgram.Name = "btnLaunchProgram";
             btnLaunchProgram.Size = new Size(134, 51);
             btnLaunchProgram.TabIndex = 6;
@@ -106,29 +112,41 @@
             // 
             // btnCloseProgram
             // 
-            btnCloseProgram.Location = new Point(334, 310);
+            btnCloseProgram.Location = new Point(334, 201);
             btnCloseProgram.Name = "btnCloseProgram";
             btnCloseProgram.Size = new Size(134, 51);
             btnCloseProgram.TabIndex = 7;
             btnCloseProgram.Text = "Close Python";
             btnCloseProgram.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(textBox2);
+            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(txtLocalVersion_Header);
+            groupBox1.Controls.Add(txtLocalVersion);
+            groupBox1.Location = new Point(23, 140);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(246, 100);
+            groupBox1.TabIndex = 8;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "groupBox1";
+            // 
             // MainGUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(groupBox1);
             Controls.Add(btnCloseProgram);
             Controls.Add(btnLaunchProgram);
             Controls.Add(btnInstallPython);
-            Controls.Add(txtLocalVersion);
-            Controls.Add(textBox2);
-            Controls.Add(txtLocalVersion_Header);
-            Controls.Add(textBox1);
             Controls.Add(txtStatus);
             Name = "MainGUI";
             Text = "Form1";
             Load += Form_Load;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -143,5 +161,6 @@
         private Button btnInstallPython;
         private Button btnLaunchProgram;
         private Button btnCloseProgram;
+        private GroupBox groupBox1;
     }
 }

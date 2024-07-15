@@ -15,3 +15,5 @@
 /PythonLoader/.vs/ProjectEvaluation
 /PythonLoader/.vs
 /PythonLoader/PythonVersions/Python3.12.4
+/PythonLoader/EmbeddedPython/Python3.12.4
+/PythonLoader/obj/Debug

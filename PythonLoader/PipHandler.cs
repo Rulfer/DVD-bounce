@@ -76,14 +76,15 @@ namespace Python_Loader
         internal void Update()
         {
             Debug.WriteLine(this + " Update()");
+            Console.WriteLine(this + " Update()");
             //string pythonExePath = Program.PythonExePath;
             ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
-                arguments: "-m pip list",
                 onDataReceived: OnDataReceived,
                 onErrorReceived: OnErrorReceived);
             //Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
             //Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
-            Program.ProcessHandler = new ProcessHandler(fileName: "py", OnProcessClosed, optionalParameters);
+            //Program.ProcessHandler = new ProcessHandler(fileName: "py"", OnProcessClosed, optionalParameters);
+            Program.ProcessHandler = new ProcessHandler(fileName: "py", workingDirectory: Program.PythonVersionManager.EmbeddedPath, OnProcessClosed, argument: "-m pip list", optionalParameters);
         }
 
         #region Retrieve installations
@@ -94,13 +95,21 @@ namespace Python_Loader
             foreach (Package package in _packages)
             {
                 if (package.LocalVersion == null)
+                {
                     Debug.WriteLine(this + $" Package: {package.Name}=(NOT INSTALLED), " +
                         $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                    Console.WriteLine(this + $" Package: {package.Name}=(NOT INSTALLED), " +
+    $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                }
+
                 else
+                {
                     Debug.WriteLine(this + $" Package: {package.Name}=(Local: {package.LocalVersion.Major}.{package.LocalVersion.Minor}.{package.LocalVersion.Patch}), " +
                         $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                    Console.WriteLine(this + $" Package: {package.Name}=(Local: {package.LocalVersion.Major}.{package.LocalVersion.Minor}.{package.LocalVersion.Patch}), " +
+                        $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                }
             }
-
             int reference = Array.FindIndex(_packages, x => x.UpdateRequired(out optionalParameter));
 
             if (reference != -1)
@@ -110,20 +119,21 @@ namespace Python_Loader
                 optionalParameter = optionalParameter != null ? optionalParameter + " " : "";
                 string argument = "-m pip install " + optionalParameter + "" + _packages[reference].Name;
                 Debug.WriteLine(this + " Install package with argument: " + argument);
+                Console.WriteLine(this + " Install package with argument: " + argument);
 
                 //string pythonExePath = Program.PythonValueCache.path;
                 ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
-                    arguments: argument,
                     onDataReceived: OnUpdateDataReceived,
                     onErrorReceived: OnUpdateErrorReceived,
                     CreateNoWindow: false);
                 //Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
                 //Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
-                Program.ProcessHandler = new ProcessHandler(fileName: "py", onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
+                //Program.ProcessHandler = new ProcessHandler(fileName: "py", onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
+                Program.ProcessHandler = new ProcessHandler(fileName: "py", workingDirectory: Program.PythonVersionManager.EmbeddedPath, argument: argument, onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
             }
             else
             {
-                Program.Form.OnPythonClosed();
+                Program.Form.OnPipReady();
             }
         }
 
@@ -161,6 +171,7 @@ namespace Python_Loader
             if (string.IsNullOrEmpty(outLine.Data))
                 return;
             Debug.WriteLine(this + $" OnUpdateDataReceived(): {outLine.Data}");
+            Console.WriteLine(this + $" OnUpdateDataReceived(): {outLine.Data}");
 
         }
 
@@ -169,6 +180,7 @@ namespace Python_Loader
             if (string.IsNullOrEmpty(outLine.Data))
                 return;
             Debug.WriteLine(this + $" OnErrorReceived(): {outLine.Data}");
+            Console.WriteLine(this + $" OnErrorReceived(): {outLine.Data}");
         }
         #endregion
 

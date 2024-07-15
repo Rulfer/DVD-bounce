@@ -9,43 +9,39 @@ namespace Python_Loader
         {
             InitializeComponent();
 
+            groupBox1.HideInvoke();
+
             btnInstallPython.HideInvoke();
             btnLaunchProgram.HideInvoke();
             btnCloseProgram.HideInvoke();
 
             btnLaunchProgram.Click += OnLaunchProgramClicked;
-            btnInstallPython.Click += OnInstallPythonClicked;
+            //btnInstallPython.Click += OnInstallPythonClicked;
             btnCloseProgram.Click += OnCloseProgramClicked;
         }
 
         private void Form_Load(object sender, EventArgs e)
         {
-            txtStatus.Text = "Hello!";
+            txtStatus.Text = "Loading python";
             Program.OnFormLoaded();
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        public void OnPythonLoaded()
         {
-
+            //string localVersion = result.isInstalled ? result.version.ToString() : "Not installed";
+            //txtLocalVersion.TextInvoke(localVersion);
+            txtStatus.TextInvoke("PIP Processing");
         }
 
-        public void OnPythonDataRetrieved(PythonVersionManager.Python result)
+        public void OnPipReady()
         {
-            string localVersion = result.isInstalled ? result.version.ToString() : "Not installed";
-            txtLocalVersion.TextInvoke(localVersion);
-            txtStatus.TextInvoke(result.isReady ? "PIP Processing" : "Please install python / update");
-
-            if (!result.isInstalled || !result.isReady)
-                btnInstallPython.ShowInvoke();
-            if (result.isReady)
-                btnLaunchProgram.ShowInvoke();
-
-            //btnCloseProgram.Hide();
+            txtStatus.TextInvoke("App ready");
+            btnLaunchProgram.ShowInvoke();
         }
 
         public void OnPythonClosed()
         {
-            btnInstallPython.ShowInvoke();
+            //btnInstallPython.ShowInvoke();
             btnLaunchProgram.ShowInvoke();
             btnCloseProgram.HideInvoke();
         }
@@ -53,7 +49,7 @@ namespace Python_Loader
         #region UI events
         private void OnInstallPythonClicked(object? sender, EventArgs e)
         {
-            btnInstallPython.Hide();
+            //btnInstallPython.Hide();
             btnLaunchProgram.Hide();
 
             Program.LoadInstallPython();
@@ -62,7 +58,7 @@ namespace Python_Loader
         private void OnLaunchProgramClicked(object? sender, EventArgs e)
         {
             Program.LoadPythonProgram();
-            btnInstallPython.Hide();
+            //btnInstallPython.Hide();
             btnLaunchProgram.Hide();
             btnCloseProgram.Show();
         }

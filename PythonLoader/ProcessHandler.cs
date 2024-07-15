@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,6 @@ namespace Python_Loader
         /// </summary>
         internal class OptionalData
         {
-            internal string Arguments { get; set; } = null;
             /// <summary>
             /// This will set the <see cref="ProcessStartInfo.UseShellExecute"/> value.
             /// </summary>
@@ -29,10 +29,9 @@ namespace Python_Loader
             internal DataReceivedEventHandler onDataReceived = null;
             internal DataReceivedEventHandler onErrorReceived = null;
 
-            internal OptionalData(string arguments = null, DataReceivedEventHandler onDataReceived = null, DataReceivedEventHandler onErrorReceived = null,
+            internal OptionalData(DataReceivedEventHandler onDataReceived = null, DataReceivedEventHandler onErrorReceived = null,
                 bool UseShellExecute = false, bool CreateNoWindow = true) 
             {
-                this.Arguments = arguments;
                 this.onDataReceived = onDataReceived;
                 this.onErrorReceived = onErrorReceived;
                 this.UseShellExecute = UseShellExecute;
@@ -53,7 +52,7 @@ namespace Python_Loader
 
         private EventHandler OnExit = null;
 
-        internal ProcessHandler(string fileName, EventHandler onDone, OptionalData optionalData = null)
+        internal ProcessHandler(string fileName, string workingDirectory, EventHandler onDone, string argument = null, OptionalData optionalData = null)
         {
             if (Instance != null) 
                 Instance.Terminate();
@@ -63,12 +62,12 @@ namespace Python_Loader
 
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = fileName;
+            info.WorkingDirectory = workingDirectory;
             info.UseShellExecute = optionalData?.UseShellExecute ?? info.UseShellExecute;
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
             info.CreateNoWindow = optionalData?.CreateNoWindow ?? info.CreateNoWindow;
-            info.Arguments = optionalData != null ? optionalData.Arguments ?? null : null;
-
+            info.Arguments = argument;
             Process = new Process();
             Process.StartInfo = info;
             Process.EnableRaisingEvents = true;
@@ -87,10 +86,17 @@ namespace Python_Loader
 
             OnExit = onDone;
 
-            Debug.WriteLine(this + $" fileName is {Process.StartInfo.FileName}");
-            Debug.WriteLine(this + $" arguments are {Process.StartInfo.Arguments}");
+            Debug.WriteLine(this + " FileName: " + Process.StartInfo.FileName);
+            Debug.WriteLine(this + " WorkingDirectory: " + Process.StartInfo.WorkingDirectory);
+            Debug.WriteLine(this + " Arguments: " + Process.StartInfo.Arguments);
+
+            Console.WriteLine(this + " FileName: " + Process.StartInfo.FileName);
+            Console.WriteLine(this + " WorkingDirectory: " + Process.StartInfo.WorkingDirectory);
+            Console.WriteLine(this + " Arguments: " + Process.StartInfo.Arguments);
 
             Process.Start();
+
+
             Process?.BeginOutputReadLine();
             Process?.BeginErrorReadLine();
         }
