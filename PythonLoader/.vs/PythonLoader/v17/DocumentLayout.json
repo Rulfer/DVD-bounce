@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\maingui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:maingui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\processhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,20 +15,20 @@
       "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:piphandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\helpers\\formextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:helpers\\formextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\pythonversionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:pythonversionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\maingui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:maingui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|f:\\personligeprosjekter\\dvd-bounce\\pythonloader\\maingui.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EBA56675-E3D8-486E-9A43-D5C4534E013D}|PythonLoader.csproj|solutionrelative:maingui.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,29 +38,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 398,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
+              "Title": "MainGUI.Designer.cs",
+              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.Designer.cs",
+              "RelativeDocumentMoniker": "MainGUI.Designer.cs",
+              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.Designer.cs",
+              "RelativeToolTip": "MainGUI.Designer.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAAtwFMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-16T11:19:35.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAGEAAAAAAAAAAAAqwIwAAAAbAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAADwv1gAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T09:39:03.007Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
+              "DocumentIndex": 0,
+              "Title": "MainGUI.cs [Design]",
+              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.cs",
+              "RelativeDocumentMoniker": "MainGUI.cs",
+              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.cs [Design]",
+              "RelativeToolTip": "MainGUI.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T21:21:07.572Z",
               "EditorCaption": " [Design]"
@@ -68,25 +81,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "FormExtensions.cs",
-              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Helpers\\FormExtensions.cs",
-              "RelativeDocumentMoniker": "Helpers\\FormExtensions.cs",
-              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Helpers\\FormExtensions.cs",
-              "RelativeToolTip": "Helpers\\FormExtensions.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAA8wCgAAAA0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T21:05:49.946Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\Form1.cs",
-              "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAIAzwBwAAAAjAAAA",
+              "Title": "MainGUI.cs",
+              "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.cs",
+              "RelativeDocumentMoniker": "MainGUI.cs",
+              "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.cs",
+              "RelativeToolTip": "MainGUI.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T20:55:40.101Z",
               "EditorCaption": ""
@@ -99,15 +99,16 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "PythonVersionManager.cs",
               "DocumentMoniker": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PythonVersionManager.cs",
               "RelativeDocumentMoniker": "PythonVersionManager.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PythonVersionManager.cs",
               "RelativeToolTip": "PythonVersionManager.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAawEAAAAAlAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T21:21:26.742Z"
+              "WhenOpened": "2024-07-14T21:21:26.742Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -117,7 +118,7 @@
               "RelativeDocumentMoniker": "PipHandler.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\PipHandler.cs",
               "RelativeToolTip": "PipHandler.cs",
-              "ViewState": "AQIAAFcAAAAAAAAAAIAwwG8AAAANAAAA",
+              "ViewState": "AQIAAIMAAAAAAAAAAAAuwEkAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T20:30:27.49Z",
               "EditorCaption": ""
@@ -130,7 +131,7 @@
               "RelativeDocumentMoniker": "ProcessHandler.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\ProcessHandler.cs",
               "RelativeToolTip": "ProcessHandler.cs",
-              "ViewState": "AQIAADkAAAAAAAAAAAAYwFgAAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAgwFgAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T09:37:18.234Z",
               "EditorCaption": ""

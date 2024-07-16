@@ -81,7 +81,6 @@
             textBox2.Size = new Size(80, 23);
             textBox2.TabIndex = 3;
             textBox2.Text = "3.12.3";
-            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // txtLocalVersion
             // 
@@ -112,9 +111,9 @@
             // 
             // btnCloseProgram
             // 
-            btnCloseProgram.Location = new Point(334, 201);
+            btnCloseProgram.Location = new Point(215, 377);
             btnCloseProgram.Name = "btnCloseProgram";
-            btnCloseProgram.Size = new Size(134, 51);
+            btnCloseProgram.Size = new Size(154, 51);
             btnCloseProgram.TabIndex = 7;
             btnCloseProgram.Text = "Close Python";
             btnCloseProgram.UseVisualStyleBackColor = true;
@@ -136,7 +135,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(574, 450);
             Controls.Add(groupBox1);
             Controls.Add(btnCloseProgram);
             Controls.Add(btnLaunchProgram);

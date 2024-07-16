@@ -1,0 +1,12 @@
+OnFormLoaded
+Python_Loader.PythonVersionManager zipOrigin: F:\PersonligeProsjekter\DVD-bounce\PythonLoader\EmbeddedPython/python3.12.4.zip
+Python_Loader.PythonVersionManager zipTarget: F:\PersonligeProsjekter\DVD-bounce\PythonLoader\EmbeddedPython/Python3.12.4
+Python_Loader.PipHandler Update()
+Python_Loader.ProcessHandler FileName: py
+Python_Loader.ProcessHandler WorkingDirectory: F:\PersonligeProsjekter\DVD-bounce\PythonLoader\EmbeddedPython/Python3.12.4
+Python_Loader.ProcessHandler Arguments: -m pip list
+Python_Loader.PipHandler Package: pip=(Local: 24.1.2), (Expected: 24.0.0)
+Python_Loader.PipHandler Package: pillow=(Local: 10.4.0), (Expected: 10.4.0)
+Python_Loader.ProcessHandler FileName: py
+Python_Loader.ProcessHandler WorkingDirectory: F:\PersonligeProsjekter\DVD-bounce\PythonLoader\EmbeddedPython/Python3.12.4
+Python_Loader.ProcessHandler Arguments: F:\PersonligeProsjekter\DVD-bounce\dvd/main.py

@@ -2,11 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Management;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Networking.Sockets;
 using Version = Python_Loader.Helpers.Version;
 
 namespace Python_Loader
@@ -52,14 +47,6 @@ namespace Python_Loader
                 if (outdated && isEqual)
                     outdated = false;
 
-                //if (LocalVersion.Major < ExpectedVersion.Major)
-                //    return true;
-                //if (LocalVersion.Minor < ExpectedVersion.Minor)
-                //    return true;
-                //if (LocalVersion.Patch < ExpectedVersion.Patch)
-                //    return true;
-
-                //return false;
                 return outdated;
             }
         }
@@ -77,13 +64,9 @@ namespace Python_Loader
         {
             Debug.WriteLine(this + " Update()");
             Console.WriteLine(this + " Update()");
-            //string pythonExePath = Program.PythonExePath;
             ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                 onDataReceived: OnDataReceived,
                 onErrorReceived: OnErrorReceived);
-            //Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
-            //Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
-            //Program.ProcessHandler = new ProcessHandler(fileName: "py"", OnProcessClosed, optionalParameters);
             Program.ProcessHandler = new ProcessHandler(fileName: "py", workingDirectory: Program.PythonVersionManager.EmbeddedPath, OnProcessClosed, argument: "-m pip list", optionalParameters);
         }
 
@@ -99,7 +82,7 @@ namespace Python_Loader
                     Debug.WriteLine(this + $" Package: {package.Name}=(NOT INSTALLED), " +
                         $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
                     Console.WriteLine(this + $" Package: {package.Name}=(NOT INSTALLED), " +
-    $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
+                        $"(Expected: {package.ExpectedVersion.Major}.{package.ExpectedVersion.Minor}.{package.ExpectedVersion.Patch})");
                 }
 
                 else
@@ -121,14 +104,10 @@ namespace Python_Loader
                 Debug.WriteLine(this + " Install package with argument: " + argument);
                 Console.WriteLine(this + " Install package with argument: " + argument);
 
-                //string pythonExePath = Program.PythonValueCache.path;
                 ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                     onDataReceived: OnUpdateDataReceived,
                     onErrorReceived: OnUpdateErrorReceived,
                     CreateNoWindow: false);
-                //Debug.WriteLine(this + $" pythonExePath is {pythonExePath}");
-                //Debug.WriteLine(this + $" arguments are {optionalParameters.Arguments}");
-                //Program.ProcessHandler = new ProcessHandler(fileName: "py", onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
                 Program.ProcessHandler = new ProcessHandler(fileName: "py", workingDirectory: Program.PythonVersionManager.EmbeddedPath, argument: argument, onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
             }
             else

@@ -22,7 +22,6 @@ namespace Python_Loader
         /// </summary>
         public static PythonVersionManager PythonVersionManager { get; private set; } = new PythonVersionManager();
 
-        //public static PythonVersionManager.Python PythonValueCache;
         internal static ProcessHandler ProcessHandler = null;
         internal static PipHandler PipHandler { get; private set; } = new PipHandler();
 
@@ -86,16 +85,6 @@ namespace Python_Loader
             PythonVersionManager.RetrieveVersion();
             //LoadPythonProgram();
         }
-
-        //public static void OnPythonLocated(PythonVersionManager.Python result)
-        //{
-        //    if (result.isReady)
-        //    {
-        //        LoadPIPPatcher();
-        //    }
-
-        //    Form.OnPythonDataRetrieved(result);
-        //}
 
         public static void OnEmbeddedPythonReady()
         {
