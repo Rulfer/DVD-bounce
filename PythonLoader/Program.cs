@@ -20,13 +20,13 @@ namespace Python_Loader
         /// <summary>
         /// Retrieve version of existing Python installation, if any.
         /// </summary>
-        public static PythonVersionManager PythonVersionManager { get; private set; } = new PythonVersionManager();
+        public static EnvironmentManager EnvironmentManager { get; private set; } = new EnvironmentManager();
 
         internal static ProcessHandler ProcessHandler = null;
         internal static PipHandler PipHandler { get; private set; } = new PipHandler();
 
         #region Cached data
-        private static string _pathToMainPy = null;
+        public static string PathToPythonAppExecutable = null;
         private static string WorkingDirectory;
         #endregion
 
@@ -44,7 +44,7 @@ namespace Python_Loader
 
 #if DEBUG
             WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            _pathToMainPy = Path.Combine(WorkingDirectory, "dvd/main.py");
+            PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
 #else
             WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
             _pathToMainPy = Path.Combine(WorkingDirectory, "Python/Build/main.py");
@@ -67,6 +67,7 @@ namespace Python_Loader
         {
             Debug.WriteLine("Farewell, world.");
             ProcessHandler?.Terminate();
+            EnvironmentManager?.DeleteCopiedFiles();
         }
 
         private static void RedirectConsoleOutput()
@@ -82,7 +83,7 @@ namespace Python_Loader
         {
             Console.WriteLine("OnFormLoaded");
             Debug.WriteLine("OnFormLoaded");
-            PythonVersionManager.RetrieveVersion();
+            EnvironmentManager.RetrieveVersion();
             //LoadPythonProgram();
         }
 
@@ -132,13 +133,12 @@ namespace Python_Loader
             try
             {
 #if DEBUG
-                _pathToMainPy = Path.Combine(WorkingDirectory, "dvd/main.py");
+                PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
 #else
                 _pathToMainPy = Path.Combine(WorkingDirectory, "Python/Build/main.py");
 
 #endif
-                //ProcessHandler = new ProcessHandler(optionalData: new ProcessHandler.OptionalData(arguments: _pathToMainPy), onDone: new EventHandler(OnProcessExited), fileName: "py");
-                ProcessHandler = new ProcessHandler(workingDirectory: PythonVersionManager.EmbeddedPath, fileName: "py", argument: _pathToMainPy, optionalData: new ProcessHandler.OptionalData(), onDone: new EventHandler(OnProcessExited));
+                ProcessHandler = new ProcessHandler(workingDirectory: EnvironmentManager.EmbeddedPath, fileName: "python.exe", argument: "main.py", optionalData: new ProcessHandler.OptionalData(), onDone: new EventHandler(OnProcessExited));
             }
             catch (Exception ex)
             {

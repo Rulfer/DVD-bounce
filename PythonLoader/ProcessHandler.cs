@@ -62,12 +62,14 @@ namespace Python_Loader
 
             ProcessStartInfo info = new ProcessStartInfo();
             info.FileName = fileName;
-            info.WorkingDirectory = workingDirectory;
+            if(workingDirectory != null)
+                info.WorkingDirectory = workingDirectory;
             info.UseShellExecute = optionalData?.UseShellExecute ?? info.UseShellExecute;
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
             info.CreateNoWindow = optionalData?.CreateNoWindow ?? info.CreateNoWindow;
-            info.Arguments = argument;
+            if(argument != null)
+                info.Arguments = argument;
             Process = new Process();
             Process.StartInfo = info;
             Process.EnableRaisingEvents = true;

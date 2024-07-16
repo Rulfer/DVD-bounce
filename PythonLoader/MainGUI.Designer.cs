@@ -33,7 +33,6 @@
             txtLocalVersion_Header = new TextBox();
             textBox2 = new TextBox();
             txtLocalVersion = new TextBox();
-            btnInstallPython = new Button();
             btnLaunchProgram = new Button();
             btnCloseProgram = new Button();
             groupBox1 = new GroupBox();
@@ -91,18 +90,10 @@
             txtLocalVersion.TabIndex = 4;
             txtLocalVersion.WordWrap = false;
             // 
-            // btnInstallPython
-            // 
-            btnInstallPython.Location = new Point(334, 201);
-            btnInstallPython.Name = "btnInstallPython";
-            btnInstallPython.Size = new Size(134, 51);
-            btnInstallPython.TabIndex = 5;
-            btnInstallPython.Text = "Install Python";
-            btnInstallPython.UseVisualStyleBackColor = true;
-            // 
             // btnLaunchProgram
             // 
-            btnLaunchProgram.Location = new Point(334, 201);
+            btnLaunchProgram.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            btnLaunchProgram.Location = new Point(325, 201);
             btnLaunchProgram.Name = "btnLaunchProgram";
             btnLaunchProgram.Size = new Size(134, 51);
             btnLaunchProgram.TabIndex = 6;
@@ -135,11 +126,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(574, 450);
+            ClientSize = new Size(802, 450);
             Controls.Add(groupBox1);
             Controls.Add(btnCloseProgram);
             Controls.Add(btnLaunchProgram);
-            Controls.Add(btnInstallPython);
             Controls.Add(txtStatus);
             Name = "MainGUI";
             Text = "Form1";
@@ -157,7 +147,6 @@
         private TextBox txtLocalVersion_Header;
         private TextBox txtLocalVersion;
         public TextBox textBox2;
-        private Button btnInstallPython;
         private Button btnLaunchProgram;
         private Button btnCloseProgram;
         private GroupBox groupBox1;

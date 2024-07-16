@@ -67,7 +67,8 @@ namespace Python_Loader
             ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                 onDataReceived: OnDataReceived,
                 onErrorReceived: OnErrorReceived);
-            Program.ProcessHandler = new ProcessHandler(fileName: "py", workingDirectory: Program.PythonVersionManager.EmbeddedPath, OnProcessClosed, argument: "-m pip list", optionalParameters);
+            //Program.ProcessHandler = new ProcessHandler(fileName: "pip.exe", workingDirectory: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts"), OnProcessClosed, argument: "list", optionalParameters);
+            Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: "list", optionalParameters);
         }
 
         #region Retrieve installations
@@ -100,7 +101,7 @@ namespace Python_Loader
                 // Update required packages. We just start from the bottom of the array and move upwards.
                 // Add whitespace in case there are parameters
                 optionalParameter = optionalParameter != null ? optionalParameter + " " : "";
-                string argument = "-m pip install " + optionalParameter + "" + _packages[reference].Name;
+                string argument = "install " + optionalParameter + "" + _packages[reference].Name;
                 Debug.WriteLine(this + " Install package with argument: " + argument);
                 Console.WriteLine(this + " Install package with argument: " + argument);
 
@@ -108,7 +109,9 @@ namespace Python_Loader
                     onDataReceived: OnUpdateDataReceived,
                     onErrorReceived: OnUpdateErrorReceived,
                     CreateNoWindow: false);
-                Program.ProcessHandler = new ProcessHandler(fileName: "py", workingDirectory: Program.PythonVersionManager.EmbeddedPath, argument: argument, onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
+                //Program.ProcessHandler = new ProcessHandler(fileName: "pip.exe", workingDirectory: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts"), argument: argument, onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
+                Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: "list", optionalParameters);
+
             }
             else
             {
