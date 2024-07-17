@@ -27,7 +27,7 @@ namespace Python_Loader
 
         #region Cached data
         public static string PathToPythonAppExecutable = null;
-        private static string WorkingDirectory;
+        public static string WorkingDirectory;
         #endregion
 
         /// <summary>
@@ -44,6 +44,7 @@ namespace Python_Loader
 
 #if DEBUG
             WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
             PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
 #else
             WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
@@ -101,29 +102,6 @@ namespace Python_Loader
             PipHandler.Update();
         }
 
-        public static void LoadInstallPython()
-        {
-            string fileName;
-#if DEBUG
-            //string gitFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            //path = Path.Combine(WorkingDirectory, "python-3.12.0-amd64.exe");
-            fileName = "python-3.12.0-amd64.exe";
-#else
-            //path = Path.Combine(WorkingDirectory, "Python/Installer/python-3.12.0-amd64.exe");
-            fileName = "Python/Installer/python-3.12.0-amd64.exe";
-#endif
-            CloseProcess();
-
-            try
-            {
-                ProcessHandler = new ProcessHandler(fileName: fileName, workingDirectory: WorkingDirectory, new EventHandler(OnProcessExited));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-
         public static void LoadPythonProgram()
         {
             string path;
@@ -132,13 +110,23 @@ namespace Python_Loader
 
             try
             {
-#if DEBUG
-                PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
-#else
-                _pathToMainPy = Path.Combine(WorkingDirectory, "Python/Build/main.py");
+                DataReceivedEventHandler onDataReceived = new DataReceivedEventHandler((object sender, DataReceivedEventArgs args) =>
+                {
+                    if (args.Data != null)
+                    {
+                        Debug.WriteLine("onDataReceived: " + args.Data);
+                    }
+                });
+                DataReceivedEventHandler onErrorReceived = new DataReceivedEventHandler((object sender, DataReceivedEventArgs args) =>
+                {
+                    if (args.Data != null)
+                    {
+                        Debug.WriteLine("onErrorReceived: " + args.Data);
+                    }
+                });
+                ProcessHandler.OptionalData optionalData = new ProcessHandler.OptionalData(onDataReceived: onDataReceived, onErrorReceived: onErrorReceived);
 
-#endif
-                ProcessHandler = new ProcessHandler(workingDirectory: EnvironmentManager.EmbeddedPath, fileName: "python.exe", argument: "main.py", optionalData: new ProcessHandler.OptionalData(), onDone: new EventHandler(OnProcessExited));
+                ProcessHandler = new ProcessHandler(workingDirectory: null, fileName: Path.Combine(EnvironmentManager.EmbeddedPath, "python.exe"), argument: Path.Combine(EnvironmentManager.EmbeddedPath, "main.py"), optionalData: optionalData, onDone: new EventHandler(OnProcessExited));
             }
             catch (Exception ex)
             {

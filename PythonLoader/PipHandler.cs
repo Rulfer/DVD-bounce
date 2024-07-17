@@ -21,15 +21,15 @@ namespace Python_Loader
             /// </summary>
             public Version LocalVersion;
 
-            public Package(string Name, string Version)
+            public Package(string Name, string ExpectedVersion)
             {
                 this.Name = Name;
-                this.ExpectedVersion = new Version(Version);
+                this.ExpectedVersion = new Version(ExpectedVersion);
             }
 
-            public void SetLocalVersion(string version)
+            public void SetLocalVersion(string LocalVersion)
             {
-                this.LocalVersion = new Version(version);
+                this.LocalVersion = new Version(LocalVersion);
             }
 
             public bool UpdateRequired(out string optionalParameter)
@@ -108,9 +108,9 @@ namespace Python_Loader
                 ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                     onDataReceived: OnUpdateDataReceived,
                     onErrorReceived: OnUpdateErrorReceived,
-                    CreateNoWindow: false);
+                    CreateNoWindow: true);
                 //Program.ProcessHandler = new ProcessHandler(fileName: "pip.exe", workingDirectory: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts"), argument: argument, onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
-                Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: "list", optionalParameters);
+                Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: argument, optionalParameters);
 
             }
             else
@@ -123,6 +123,7 @@ namespace Python_Loader
         {
             if (string.IsNullOrEmpty(outLine.Data))
                 return;
+            Debug.WriteLine(this + " OnDataReceived: " + outLine.Data);
             string[] split = outLine.Data.Split().Where(x => x != string.Empty).ToArray(); 
             string package = split[0];
             string version = split[1];
@@ -155,6 +156,16 @@ namespace Python_Loader
             Debug.WriteLine(this + $" OnUpdateDataReceived(): {outLine.Data}");
             Console.WriteLine(this + $" OnUpdateDataReceived(): {outLine.Data}");
 
+            string output = outLine.Data;
+            if (output.ToLower().Contains("successfully installed"))
+            {
+                output = output.Replace("Successfully installed", "");
+                output = output.Replace(" ", "");
+                string packageName = output.Split("-").First();
+                string version = output.Split("-").Last();
+                int reference = Array.FindIndex(_packages, x => x.Name == packageName);
+                _packages[reference].SetLocalVersion(version);
+            }
         }
 
         private void OnUpdateErrorReceived(object sender, DataReceivedEventArgs outLine)
@@ -165,7 +176,5 @@ namespace Python_Loader
             Console.WriteLine(this + $" OnErrorReceived(): {outLine.Data}");
         }
         #endregion
-
-
     }
 }
