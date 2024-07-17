@@ -45,10 +45,9 @@ namespace Python_Loader
 #if DEBUG
             WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
             PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
-            PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "dvd/main.py");
 #else
             WorkingDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-            _pathToMainPy = Path.Combine(WorkingDirectory, "Python/Build/main.py");
+            PathToPythonAppExecutable = Path.Combine(WorkingDirectory, "Python/Build/main.py");
 #endif
 
             RedirectConsoleOutput();
