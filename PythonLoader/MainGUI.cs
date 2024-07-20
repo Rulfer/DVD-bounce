@@ -1,6 +1,9 @@
 using Python_Loader.Helpers;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Python_Loader
 {
@@ -18,9 +21,17 @@ namespace Python_Loader
         /// </summary>
         private Point _lastLocation;
 
+        Color _start = Color.FromArgb(255, 2, 242, 222);
+        Color _end = Color.FromArgb(255, 2, 200, 222);
+
         public MainGUI()
         {
             InitializeComponent();
+
+            // Enable double buffering to reduce flicker
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint, true);
 
             btnLaunchProgram.HideInvoke();
             btnCloseProgram.HideInvoke();
@@ -28,20 +39,19 @@ namespace Python_Loader
             btnLaunchProgram.Click += OnLaunchProgramClicked;
             btnCloseProgram.Click += OnCloseProgramClicked;
 
-            this.Paint += OnPaint;
+            this.Paint += OnPaintBackground;
         }
 
         private void Form_Load(object sender, EventArgs e)
         {
             LabelProcess.Text = "Loading python";
-            //RoundCorners(this);
             Program.OnFormLoaded();
         }
 
         /// <summary>
         /// We can dynamically set the backgroud to something with a gradient here.
         /// </summary>
-        private void OnPaint(Object sender, PaintEventArgs e)
+        private void OnPaintBackground(Object sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
 
@@ -52,13 +62,9 @@ namespace Python_Loader
             graphics.InterpolationMode = InterpolationMode.HighQualityBilinear;
 
             Rectangle gradientRectangle = new Rectangle(0, 0, Width, Height);
-            Color start = Color.FromArgb(255, 2, 242, 222);
-            Color end = Color.FromArgb(255, 2, 200, 222);
 
-            //Brush brush = new LinearGradientBrush(gradientRectangle, start, end, 45f);
-            //graphics.FillRectangle(brush, gradientRectangle);
 
-            using (Brush brush = new LinearGradientBrush(gradientRectangle, start, end, 45f))
+            using (Brush brush = new LinearGradientBrush(gradientRectangle, _start, _end, 270))
             {
                 // Draw the rounded corners to visually smooth out the edges
                 using (GraphicsPath path = new GraphicsPath())
@@ -76,27 +82,41 @@ namespace Python_Loader
                 }
 
             }
-
-
-            //Brush brush = new LinearGradientBrush(gradientRectangle, start, end, 45f);
-            //graphics.FillRectangle(brush, gradientRectangle);
         }
 
-        private void RoundCorners(Form form)
-        {
-            // Create a new GraphicsPath
-            GraphicsPath path = new GraphicsPath();
+        //private void OnPaintButton(Object sender, PaintEventArgs e)
+        //{
+        //    Graphics graphics = e.Graphics;
+        //    Button btn = sender as Button;
+        //    Color currentColor = btn.BackColor;
 
-            // Define the rectangle for the rounded corners
-            path.AddArc(new Rectangle(0, 0, CornerRadius, CornerRadius), 180, 90);
-            path.AddArc(new Rectangle(form.Width - CornerRadius, 0, CornerRadius, CornerRadius), 270, 90);
-            path.AddArc(new Rectangle(form.Width - CornerRadius, form.Height - CornerRadius, CornerRadius, CornerRadius), 0, 90);
-            path.AddArc(new Rectangle(0, form.Height - CornerRadius, CornerRadius, CornerRadius), 90, 90);
-            path.CloseAllFigures();
+        //    // Create a semi-transparent brush
+        //    using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, currentColor.R, currentColor.G, currentColor.B)))
+        //    {
+        //        e.Graphics.FillRectangle(brush, btn.ClientRectangle);
+        //    }
 
-            // Apply the rounded corners to the form
-            form.Region = new Region(path);
-        }
+        //    // Draw text
+        //    ButtonRenderer.DrawButton(e.Graphics, btn.ClientRectangle, btn.Text, btn.Font, false, PushButtonState.Normal);
+        //}
+
+        //private void OnPaintButton(Object sender, PaintEventArgs e)
+        //{
+        //    Graphics graphics = e.Graphics;
+        //    Button btn = sender as Button;
+
+        //    if (btn != null)
+        //    {
+        //        using (LinearGradientBrush brush = new LinearGradientBrush(btn.ClientRectangle, _end, _start, 45F))
+        //        {
+        //            e.Graphics.FillRectangle(brush, btn.ClientRectangle);
+        //        }
+        //        ControlPaint.DrawBorder(e.Graphics, btn.ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
+        //        //ButtonRenderer.DrawButton(e.Graphics, btn.ClientRectangle, btn.Text, btn.Font, false, PushButtonState.Normal);
+        //        TextRenderer.DrawText(e.Graphics, btn.Text, btn.Font, btn.ClientRectangle, btn.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        //    }
+
+        //}
 
         public void OnPythonLoaded()
         {
@@ -140,6 +160,7 @@ namespace Python_Loader
             Application.Exit();
         }
 
+        #region Drag Program events.
         protected override void OnMouseDown(MouseEventArgs e)
         {
             _mouseDown = true;
@@ -163,6 +184,20 @@ namespace Python_Loader
                 this.Update();
             }
             base.OnMouseMove(e);
+        }
+        #endregion
+
+        private void MainGUI_DragEnter(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine(this + " HELLO");
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string filePath in files)
+                {
+                    Debug.WriteLine(filePath);
+                }
+            }
         }
     }
 }

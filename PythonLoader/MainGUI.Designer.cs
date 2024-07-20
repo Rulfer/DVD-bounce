@@ -37,22 +37,24 @@
             // btnLaunchProgram
             // 
             btnLaunchProgram.Anchor = AnchorStyles.None;
+            btnLaunchProgram.BackColor = Color.Transparent;
             btnLaunchProgram.Location = new Point(58, 134);
             btnLaunchProgram.Name = "btnLaunchProgram";
             btnLaunchProgram.Size = new Size(150, 50);
             btnLaunchProgram.TabIndex = 6;
             btnLaunchProgram.Text = "Launch program";
-            btnLaunchProgram.UseVisualStyleBackColor = true;
+            btnLaunchProgram.UseVisualStyleBackColor = false;
             // 
             // btnCloseProgram
             // 
             btnCloseProgram.Anchor = AnchorStyles.None;
+            btnCloseProgram.BackColor = Color.White;
             btnCloseProgram.Location = new Point(58, 134);
             btnCloseProgram.Name = "btnCloseProgram";
             btnCloseProgram.Size = new Size(150, 50);
             btnCloseProgram.TabIndex = 7;
             btnCloseProgram.Text = "Close Python";
-            btnCloseProgram.UseVisualStyleBackColor = true;
+            btnCloseProgram.UseVisualStyleBackColor = false;
             // 
             // LabelProcess
             // 
@@ -85,14 +87,16 @@
             // 
             // MainGUI
             // 
+            AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.EnableAllowFocusChange;
             BackColor = Color.FromArgb(255, 224, 192);
             ClientSize = new Size(255, 305);
             Controls.Add(btnQuit);
             Controls.Add(LabelProcess);
-            Controls.Add(btnCloseProgram);
             Controls.Add(btnLaunchProgram);
+            Controls.Add(btnCloseProgram);
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -101,6 +105,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Python Loader";
             Load += Form_Load;
+            DragEnter += MainGUI_DragEnter;
             ResumeLayout(false);
         }
 
