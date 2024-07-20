@@ -1,6 +1,9 @@
 OnFormLoaded
 Python_Loader.EnvironmentManager zipOrigin: F:\PersonligeProsjekter\DVD-bounce\python3.12.4.zip
 Python_Loader.EnvironmentManager zipTarget: F:\PersonligeProsjekter\DVD-bounce\python3.12.4
+Python_Loader.ProcessHandler FileName: F:\PersonligeProsjekter\DVD-bounce\python3.12.4\python.exe
+Python_Loader.ProcessHandler WorkingDirectory: 
+Python_Loader.ProcessHandler Arguments: -m get-pip
 Python_Loader.PipHandler Update()
 Python_Loader.ProcessHandler FileName: F:\PersonligeProsjekter\DVD-bounce\python3.12.4\Scripts\pip.exe
 Python_Loader.ProcessHandler WorkingDirectory: 
@@ -9,4 +12,4 @@ Python_Loader.PipHandler Package: pip=(Local: 24.1.2), (Expected: 24.0.0)
 Python_Loader.PipHandler Package: pillow=(Local: 10.4.0), (Expected: 10.4.0)
 Python_Loader.ProcessHandler FileName: F:\PersonligeProsjekter\DVD-bounce\python3.12.4\python.exe
 Python_Loader.ProcessHandler WorkingDirectory: 
-Python_Loader.ProcessHandler Arguments: F:\PersonligeProsjekter\DVD-bounce\python3.12.4\main.py
+Python_Loader.ProcessHandler Arguments: F:\PersonligeProsjekter\DVD-bounce\dvd/main.py

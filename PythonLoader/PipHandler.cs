@@ -67,8 +67,8 @@ namespace Python_Loader
             ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
                 onDataReceived: OnDataReceived,
                 onErrorReceived: OnErrorReceived);
-            //Program.ProcessHandler = new ProcessHandler(fileName: "pip.exe", workingDirectory: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts"), OnProcessClosed, argument: "list", optionalParameters);
-            Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: "list", optionalParameters);
+            //Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPythonPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: "list", optionalParameters);
+            Program.ProcessHandler = new ProcessHandler(fileName: Program.EnvironmentManager.PipPath, workingDirectory: null, OnProcessClosed, argument: "list", optionalParameters);
         }
 
         #region Retrieve installations
@@ -109,8 +109,8 @@ namespace Python_Loader
                     onDataReceived: OnUpdateDataReceived,
                     onErrorReceived: OnUpdateErrorReceived,
                     CreateNoWindow: true);
-                //Program.ProcessHandler = new ProcessHandler(fileName: "pip.exe", workingDirectory: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts"), argument: argument, onDone: OnUpdadeProcessDone, optionalData: optionalParameters);
-                Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: argument, optionalParameters);
+                //Program.ProcessHandler = new ProcessHandler(fileName: Path.Combine(Program.EnvironmentManager.EmbeddedPythonPath, "Scripts\\pip.exe"), workingDirectory: null, OnProcessClosed, argument: argument, optionalParameters);
+                Program.ProcessHandler = new ProcessHandler(fileName: Program.EnvironmentManager.PipPath, workingDirectory: null, OnProcessClosed, argument: argument, optionalParameters);
 
             }
             else

@@ -125,7 +125,7 @@ namespace Python_Loader
                 });
                 ProcessHandler.OptionalData optionalData = new ProcessHandler.OptionalData(onDataReceived: onDataReceived, onErrorReceived: onErrorReceived);
 
-                ProcessHandler = new ProcessHandler(workingDirectory: null, fileName: Path.Combine(EnvironmentManager.EmbeddedPath, "python.exe"), argument: Path.Combine(EnvironmentManager.EmbeddedPath, "main.py"), optionalData: optionalData, onDone: new EventHandler(OnProcessExited));
+                ProcessHandler = new ProcessHandler(workingDirectory: null, fileName: EnvironmentManager.EmbeddedPythonPath, argument: PathToPythonAppExecutable, optionalData: optionalData, onDone: new EventHandler(OnProcessExited));
             }
             catch (Exception ex)
             {

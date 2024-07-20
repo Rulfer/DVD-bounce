@@ -51,6 +51,11 @@ namespace Python_Loader
         public Process Process { get; private set; } = null;
 
         private EventHandler OnExit = null;
+        private string fileName;
+        private object workingDirectory;
+        private Action<object, DataReceivedEventArgs> onDone;
+        private string argument;
+        private OptionalData optionalParameters;
 
         internal ProcessHandler(string fileName, string workingDirectory, EventHandler onDone, string argument = null, OptionalData optionalData = null)
         {
