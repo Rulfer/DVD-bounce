@@ -28,127 +28,86 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtStatus = new TextBox();
-            textBox1 = new TextBox();
-            txtLocalVersion_Header = new TextBox();
-            textBox2 = new TextBox();
-            txtLocalVersion = new TextBox();
             btnLaunchProgram = new Button();
             btnCloseProgram = new Button();
-            groupBox1 = new GroupBox();
-            groupBox1.SuspendLayout();
+            LabelProcess = new TransparentLabel();
+            btnQuit = new Button();
             SuspendLayout();
-            // 
-            // txtStatus
-            // 
-            txtStatus.AccessibleRole = AccessibleRole.None;
-            txtStatus.BackColor = SystemColors.InactiveBorder;
-            txtStatus.BorderStyle = BorderStyle.None;
-            txtStatus.Location = new Point(303, 79);
-            txtStatus.Name = "txtStatus";
-            txtStatus.ReadOnly = true;
-            txtStatus.ShortcutsEnabled = false;
-            txtStatus.Size = new Size(204, 16);
-            txtStatus.TabIndex = 0;
-            txtStatus.Text = "Checking status";
-            txtStatus.TextAlign = HorizontalAlignment.Center;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(-2, 22);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(130, 23);
-            textBox1.TabIndex = 1;
-            textBox1.Text = "Recommended version: 312";
-            // 
-            // txtLocalVersion_Header
-            // 
-            txtLocalVersion_Header.Location = new Point(-2, 61);
-            txtLocalVersion_Header.Name = "txtLocalVersion_Header";
-            txtLocalVersion_Header.ReadOnly = true;
-            txtLocalVersion_Header.Size = new Size(130, 23);
-            txtLocalVersion_Header.TabIndex = 2;
-            txtLocalVersion_Header.Text = "Local version:";
-            // 
-            // textBox2
-            // 
-            textBox2.Enabled = false;
-            textBox2.Location = new Point(134, 22);
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(80, 23);
-            textBox2.TabIndex = 3;
-            textBox2.Text = "3.12.3";
-            // 
-            // txtLocalVersion
-            // 
-            txtLocalVersion.Location = new Point(134, 61);
-            txtLocalVersion.Name = "txtLocalVersion";
-            txtLocalVersion.ReadOnly = true;
-            txtLocalVersion.Size = new Size(80, 23);
-            txtLocalVersion.TabIndex = 4;
-            txtLocalVersion.WordWrap = false;
             // 
             // btnLaunchProgram
             // 
-            btnLaunchProgram.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            btnLaunchProgram.Location = new Point(325, 201);
+            btnLaunchProgram.Anchor = AnchorStyles.None;
+            btnLaunchProgram.Location = new Point(58, 134);
             btnLaunchProgram.Name = "btnLaunchProgram";
-            btnLaunchProgram.Size = new Size(134, 51);
+            btnLaunchProgram.Size = new Size(150, 50);
             btnLaunchProgram.TabIndex = 6;
             btnLaunchProgram.Text = "Launch program";
             btnLaunchProgram.UseVisualStyleBackColor = true;
             // 
             // btnCloseProgram
             // 
-            btnCloseProgram.Location = new Point(215, 377);
+            btnCloseProgram.Anchor = AnchorStyles.None;
+            btnCloseProgram.Location = new Point(58, 134);
             btnCloseProgram.Name = "btnCloseProgram";
-            btnCloseProgram.Size = new Size(154, 51);
+            btnCloseProgram.Size = new Size(150, 50);
             btnCloseProgram.TabIndex = 7;
             btnCloseProgram.Text = "Close Python";
             btnCloseProgram.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // LabelProcess
             // 
-            groupBox1.Controls.Add(textBox2);
-            groupBox1.Controls.Add(textBox1);
-            groupBox1.Controls.Add(txtLocalVersion_Header);
-            groupBox1.Controls.Add(txtLocalVersion);
-            groupBox1.Location = new Point(23, 140);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(246, 100);
-            groupBox1.TabIndex = 8;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            LabelProcess.Anchor = AnchorStyles.None;
+            LabelProcess.BackColor = Color.Transparent;
+            LabelProcess.CausesValidation = false;
+            LabelProcess.Location = new Point(32, 76);
+            LabelProcess.Name = "LabelProcess";
+            LabelProcess.Size = new Size(200, 32);
+            LabelProcess.TabIndex = 9;
+            LabelProcess.Text = "Hello, world";
+            LabelProcess.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // btnQuit
+            // 
+            btnQuit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnQuit.BackColor = Color.Red;
+            btnQuit.BackgroundImageLayout = ImageLayout.None;
+            btnQuit.FlatAppearance.BorderSize = 0;
+            btnQuit.FlatStyle = FlatStyle.Flat;
+            btnQuit.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnQuit.ForeColor = Color.Transparent;
+            btnQuit.Location = new Point(220, -2);
+            btnQuit.Name = "btnQuit";
+            btnQuit.Size = new Size(36, 25);
+            btnQuit.TabIndex = 10;
+            btnQuit.Text = "X";
+            btnQuit.UseVisualStyleBackColor = false;
+            btnQuit.Click += btnQuit_Click;
             // 
             // MainGUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(802, 450);
-            Controls.Add(groupBox1);
+            BackColor = Color.FromArgb(255, 224, 192);
+            ClientSize = new Size(255, 305);
+            Controls.Add(btnQuit);
+            Controls.Add(LabelProcess);
             Controls.Add(btnCloseProgram);
             Controls.Add(btnLaunchProgram);
-            Controls.Add(txtStatus);
+            FormBorderStyle = FormBorderStyle.None;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MainGUI";
-            Text = "Form1";
+            ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Python Loader";
             Load += Form_Load;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        public TextBox txtStatus;
-        private TextBox textBox1;
-        private TextBox txtLocalVersion_Header;
-        private TextBox txtLocalVersion;
-        public TextBox textBox2;
         private Button btnLaunchProgram;
         private Button btnCloseProgram;
-        private GroupBox groupBox1;
+        public TransparentLabel LabelProcess;
+        private Button btnQuit;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Python_Loader.Helpers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,6 +35,7 @@ namespace Python_Loader
 
         public async void RetrieveVersion()
         {
+            Program.Form.SetLabelText("Preparing python.exe");
             Unzip();
             await PreparePip();
             CopyFiles();
@@ -123,12 +125,6 @@ namespace Python_Loader
         private async Task PreparePip()
         {
             FileInfo pipInfo = new FileInfo(PipPath);
-            //if (!pipInfo.Exists)
-            //{
-            //    // Download and create Pip.
-            //    Debug.WriteLine(this + " Pip not installed");
-            //    await DownloadPip();
-            //}
 
             // Verify installation
             Debug.WriteLine(this + " Verify pip installation");
@@ -136,6 +132,8 @@ namespace Python_Loader
 
             if (!result) 
             {
+                Program.Form.SetLabelText("Installing PIP");
+
                 Debug.WriteLine(this + " Pip not installed.");
                 bool hasError = true;
                 while(hasError)

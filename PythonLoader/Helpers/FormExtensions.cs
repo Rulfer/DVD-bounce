@@ -8,7 +8,7 @@ namespace Python_Loader.Helpers
 {
     internal static class FormExtensions 
     {
-        internal static void TextInvoke(this TextBox text, string s)
+        internal static void TextInvoke(this Control text, string s)
         {
             if (text.InvokeRequired)
             {

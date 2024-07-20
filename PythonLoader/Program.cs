@@ -109,23 +109,9 @@ namespace Python_Loader
 
             try
             {
-                DataReceivedEventHandler onDataReceived = new DataReceivedEventHandler((object sender, DataReceivedEventArgs args) =>
-                {
-                    if (args.Data != null)
-                    {
-                        Debug.WriteLine("onDataReceived: " + args.Data);
-                    }
-                });
-                DataReceivedEventHandler onErrorReceived = new DataReceivedEventHandler((object sender, DataReceivedEventArgs args) =>
-                {
-                    if (args.Data != null)
-                    {
-                        Debug.WriteLine("onErrorReceived: " + args.Data);
-                    }
-                });
-                ProcessHandler.OptionalData optionalData = new ProcessHandler.OptionalData(onDataReceived: onDataReceived, onErrorReceived: onErrorReceived);
 
-                ProcessHandler = new ProcessHandler(workingDirectory: null, fileName: EnvironmentManager.EmbeddedPythonPath, argument: PathToPythonAppExecutable, optionalData: optionalData, onDone: new EventHandler(OnProcessExited));
+
+                ProcessHandler = new ProcessHandler(workingDirectory: null, fileName: EnvironmentManager.EmbeddedPythonPath, argument: PathToPythonAppExecutable, onDone: new EventHandler(OnProcessExited), optionalData: new ProcessHandler.OptionalData(CreateNoWindow: true));
             }
             catch (Exception ex)
             {

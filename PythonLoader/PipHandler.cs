@@ -62,6 +62,7 @@ namespace Python_Loader
         /// </summary>
         internal void Update()
         {
+            Program.Form.SetLabelText("Updating packages");
             Debug.WriteLine(this + " Update()");
             Console.WriteLine(this + " Update()");
             ProcessHandler.OptionalData optionalParameters = new ProcessHandler.OptionalData(
@@ -144,11 +145,6 @@ namespace Python_Loader
         #endregion
 
         #region Update packages
-        private void OnUpdadeProcessDone(object sender, EventArgs e)
-        {
-            Update();
-        }
-
         private void OnUpdateDataReceived(object sender, DataReceivedEventArgs outLine)
         {
             if (string.IsNullOrEmpty(outLine.Data))
