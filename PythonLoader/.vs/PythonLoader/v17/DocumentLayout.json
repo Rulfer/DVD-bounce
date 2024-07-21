@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "MainGUI.cs",
               "ToolTip": "F:\\PersonligeProsjekter\\DVD-bounce\\PythonLoader\\MainGUI.cs",
               "RelativeToolTip": "MainGUI.cs",
-              "ViewState": "AQIAAEkAAAAAAAAAAAAiwGQAAAALAAAA",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAgwGAAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T20:55:40.101Z",
               "IsPinned": true,
@@ -64,8 +64,7 @@
               "RelativeToolTip": "TransparentLabel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-20T18:31:25.175Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-20T18:31:25.175Z"
             },
             {
               "$type": "Document",
@@ -77,8 +76,7 @@
               "RelativeToolTip": "ProcessHandler.cs",
               "ViewState": "AQIAADQAAAAAAAAAAAAlwDsAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T09:37:18.234Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T09:37:18.234Z"
             },
             {
               "$type": "Document",
@@ -90,8 +88,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAAFoAAAAAAAAAAAAWwCUAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T09:39:03.007Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T09:39:03.007Z"
             }
           ]
         },
@@ -121,8 +118,7 @@
               "RelativeToolTip": "EnvironmentManager.cs",
               "ViewState": "AQIAAJ4AAAAAAAAAAAD4v4YAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T21:21:26.742Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T21:21:26.742Z"
             },
             {
               "$type": "Document",
@@ -134,8 +130,7 @@
               "RelativeToolTip": "PipHandler.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAxwHQAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T20:30:27.49Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T20:30:27.49Z"
             }
           ]
         }
