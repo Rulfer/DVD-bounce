@@ -30,6 +30,7 @@ class DVD:
         # Initialize images
         self.img = get_image(self.tk)
         self.labels = []
+        # What are for-loops, am I right?
         self.labels.append(self.create_image())
         self.labels.append(self.create_image())
         self.labels.append(self.create_image())
